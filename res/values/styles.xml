@@ -1,0 +1,17 @@
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <style name="AppTheme" parent="android:Theme.Light">
+        <item name="android:background">#C2C2C2</item>
+        <item name="android:textStyle">@style/fonttextSyle</item>
+        <item name="android:buttonStyle">@style/fontButtonStyle</item>
+    </style>
+
+    <style name="fonttextSyle">
+        <item name="android:fontFamily">Tahoma</item>
+    </style>
+
+    <style name="fontButtonStyle">
+        <item name="android:fontFamily">Tahoma</item>
+    </style>
+
+</resources>

@@ -1,0 +1,23 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" >
+
+    <ListView
+        android:id="@+id/navList"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#000"
+        android:choiceMode="singleChoice"
+        android:divider="@android:color/darker_gray"
+        android:dividerHeight="1dp"
+        tools:context="edu.wsu.weather.agweathernet.NavigationDrawerFragment" />
+
+    <ImageView
+        android:id="@+id/slideWsuLogo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:contentDescription="@string/logotext"
+        android:src="@drawable/wsu_logontext" />
+
+</RelativeLayout>

@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/singleAlertLayout"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical" >
+
+    <EditText
+        android:id="@+id/editName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5sp"
+        android:enabled="false"
+        android:hint="@string/name" />
+
+    <Spinner
+        android:id="@+id/stationsList"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/editName"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="5sp" />
+
+    <Spinner
+        android:id="@+id/alertEventList"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/stationsList"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="5sp" />
+
+    <EditText
+        android:id="@+id/editTresholdValue"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/alertEventList"
+        android:layout_marginTop="5sp"
+        android:enabled="false"
+        android:hint="@string/treshold_value" />
+
+    <Spinner
+        android:id="@+id/unitTypeList"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/editTresholdValue"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="5sp" />
+
+    <Spinner
+        android:id="@+id/alertMethodList"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/unitTypeList"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="5sp" />
+
+    <EditText
+        android:id="@+id/editAddress"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/alertMethodList"
+        android:layout_marginTop="5sp"
+        android:enabled="false"
+        android:hint="@string/address" />
+
+    <Spinner
+        android:id="@+id/deliveryStatusList"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/editAddress"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="5sp" />
+
+    <EditText
+        android:id="@+id/editServiceProvider"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/deliveryStatusList"
+        android:layout_marginTop="5sp"
+        android:enabled="false"
+        android:hint="@string/service_provider" />
+
+    <EditText
+        android:id="@+id/editStartTime"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/editServiceProvider"
+        android:layout_marginTop="5sp"
+        android:enabled="false"
+        android:visibility="invisible"
+        android:hint="@string/start_time" />
+
+    <Button
+        android:id="@+id/saveAlert"
+        android:layout_width="150sp"
+        android:layout_height="40sp"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/editStartTime"
+        android:layout_marginRight="2sp"
+        android:layout_marginTop="5sp"
+        android:background="@drawable/buttonshape"
+        android:text="@string/save"
+        android:textColor="#D1D1D1"
+        android:textSize="25sp"
+        android:visibility="invisible" />
+
+</RelativeLayout>

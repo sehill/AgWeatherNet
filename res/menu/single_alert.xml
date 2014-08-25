@@ -1,0 +1,16 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="edu.edu.weather.agweathernet.SingleAlertActivity" >
+
+    <item
+        android:id="@+id/editAlert"
+        android:orderInCategory="103"
+        android:showAsAction="withText|ifRoom"
+        android:title="@string/edit_alert"/>
+    <item
+        android:id="@+id/newAlert"
+        android:orderInCategory="102"
+        android:title="@string/new_alert"/>
+
+</menu>
