@@ -1,0 +1,316 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="match_parent"
+    android:paddingLeft="16dp"
+    android:paddingRight="16dp"
+    android:paddingTop="16dp" >
+
+    <LinearLayout
+        android:id="@+id/fstLinearTitles"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/stationName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
+
+        <TextView
+            android:id="@+id/county"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="#981e32" />
+
+        <TextView
+            android:id="@+id/inTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="#A6A6A6" />
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/fstStationImg"
+        android:layout_width="170dp"
+        android:layout_height="125dp"
+        android:layout_marginBottom="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_toRightOf="@+id/fstLinearlabels"
+        android:contentDescription="@string/logotext" />
+
+    <LinearLayout
+        android:id="@+id/fstLinearlabels"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/fstStationImg"
+        android:orientation="vertical" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/temperature"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="#981e32" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:text="@string/relative_humidity"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="#981e32" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:text="@string/dew_point"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="#981e32" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:text="@string/wind"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="#981e32" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:text="@string/today_apos_s_rain"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="#981e32" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:text="@string/solar_rad_"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="#981e32" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:text="@string/leaf_wetness"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="#981e32" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:text="@string/_8_soil_temp"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="#981e32" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:text="@string/date_installed"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="#981e32" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/fstStationImg"
+        android:layout_marginLeft="25dp"
+        android:layout_toRightOf="@+id/fstLinearlabels"
+        android:orientation="vertical" >
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" >
+
+            <TextView
+                android:id="@+id/temperature"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@+id/temperature"
+                android:layout_marginLeft="3dp"
+                android:layout_toRightOf="@+id/temperature"
+                android:text="@string/_f"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textColor="#981e32" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" >
+
+            <TextView
+                android:id="@+id/relHumidity"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@+id/relHumidity"
+                android:layout_marginLeft="3dp"
+                android:layout_toRightOf="@+id/relHumidity"
+                android:text="@string/_percent"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textColor="#981e32" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" >
+
+            <TextView
+                android:id="@+id/dewPoint"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@+id/dewPoint"
+                android:layout_marginLeft="3dp"
+                android:layout_toRightOf="@+id/dewPoint"
+                android:text="@string/_f"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textColor="#981e32" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" >
+
+            <TextView
+                android:id="@+id/wind"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@+id/wind"
+                android:layout_marginLeft="3dp"
+                android:layout_toRightOf="@+id/wind"
+                android:text="@string/mph"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textColor="#981e32" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" >
+
+            <TextView
+                android:id="@+id/todayRain"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@+id/todayRain"
+                android:layout_marginLeft="3dp"
+                android:layout_toRightOf="@+id/todayRain"
+                android:text="@string/in"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textColor="#981e32" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" >
+
+            <TextView
+                android:id="@+id/solarRad"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@+id/solarRad"
+                android:layout_marginLeft="3dp"
+                android:layout_toRightOf="@+id/solarRad"
+                android:text="@string/w_m2"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textColor="#981e32" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" >
+
+            <TextView
+                android:id="@+id/leafWetnes"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@+id/leafWetnes"
+                android:layout_marginLeft="3dp"
+                android:layout_toRightOf="@+id/leafWetnes"
+                android:text="@string/unity"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textColor="#981e32" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" >
+
+            <TextView
+                android:id="@+id/soilTemp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@+id/soilTemp"
+                android:layout_marginLeft="3dp"
+                android:layout_toRightOf="@+id/soilTemp"
+                android:text="@string/_f"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textColor="#981e32" />
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/dateInstalled"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+    </LinearLayout>
+
+</RelativeLayout>

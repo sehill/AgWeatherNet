@@ -16,6 +16,7 @@ public class CommonUtility {
 	public final static String ALERTS_ACT_STR = "AlertsFragment";
 	public final static String SINGLE_ALERT_ACT_STR = "SingleAlertActivity";
 	public final static String STATIONS_TAG = "StationsFragment";
+	public final static String SINGLE_STATION_TAG = "SingleStationFragment";
 
 	public final static Map<Integer, Fragment> NAVIGATION_FRAGMENTS;
 	static {

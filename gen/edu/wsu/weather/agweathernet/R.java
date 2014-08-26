@@ -405,27 +405,28 @@ containing a value of this type.
         public static final int common_signin_btn_text_normal_light=0x7f02001b;
         public static final int common_signin_btn_text_pressed_dark=0x7f02001c;
         public static final int common_signin_btn_text_pressed_light=0x7f02001d;
-        public static final int default_station=0x7f02001e;
-        public static final int drawer_shadow=0x7f02001f;
-        public static final int home=0x7f020020;
-        public static final int ic_action_search=0x7f020021;
-        public static final int ic_drawer=0x7f020022;
-        public static final int ic_launcher=0x7f020023;
-        public static final int ic_plusone_medium_off_client=0x7f020024;
-        public static final int ic_plusone_small_off_client=0x7f020025;
-        public static final int ic_plusone_standard_off_client=0x7f020026;
-        public static final int ic_plusone_tall_off_client=0x7f020027;
-        public static final int powered_by_google_dark=0x7f020028;
-        public static final int powered_by_google_light=0x7f020029;
-        public static final int wsu144=0x7f02002a;
-        public static final int wsu16=0x7f02002b;
-        public static final int wsu48=0x7f02002c;
-        public static final int wsu72=0x7f02002d;
-        public static final int wsu96=0x7f02002e;
-        public static final int wsu_logontext=0x7f02002f;
+        public static final int def_station=0x7f02001e;
+        public static final int default_station=0x7f02001f;
+        public static final int drawer_shadow=0x7f020020;
+        public static final int home=0x7f020021;
+        public static final int ic_action_search=0x7f020022;
+        public static final int ic_drawer=0x7f020023;
+        public static final int ic_launcher=0x7f020024;
+        public static final int ic_plusone_medium_off_client=0x7f020025;
+        public static final int ic_plusone_small_off_client=0x7f020026;
+        public static final int ic_plusone_standard_off_client=0x7f020027;
+        public static final int ic_plusone_tall_off_client=0x7f020028;
+        public static final int powered_by_google_dark=0x7f020029;
+        public static final int powered_by_google_light=0x7f02002a;
+        public static final int wsu144=0x7f02002b;
+        public static final int wsu16=0x7f02002c;
+        public static final int wsu48=0x7f02002d;
+        public static final int wsu72=0x7f02002e;
+        public static final int wsu96=0x7f02002f;
+        public static final int wsu_logontext=0x7f020030;
     }
     public static final class id {
-        public static final int action_settings=0x7f080039;
+        public static final int action_settings=0x7f080047;
         public static final int alertEventList=0x7f080023;
         public static final int alertMethodList=0x7f080026;
         public static final int alertName=0x7f08002d;
@@ -436,30 +437,38 @@ containing a value of this type.
         public static final int buy_with_google=0x7f08000e;
         public static final int classic=0x7f080011;
         public static final int container=0x7f08001a;
-        public static final int county=0x7f080035;
+        public static final int county=0x7f080034;
+        public static final int countye=0x7f080043;
+        public static final int dateInstalled=0x7f080040;
         public static final int deliveryStatusList=0x7f080028;
+        public static final int dewPoint=0x7f08003a;
         public static final int drawer_layout=0x7f080019;
         public static final int editAddress=0x7f080027;
-        public static final int editAlert=0x7f08003a;
+        public static final int editAlert=0x7f080048;
         public static final int editName=0x7f080021;
         public static final int editServiceProvider=0x7f080029;
         public static final int editStartTime=0x7f08002a;
         public static final int editTresholdValue=0x7f080024;
+        public static final int fstLinearTitles=0x7f080033;
+        public static final int fstLinearlabels=0x7f080037;
+        public static final int fstStationImg=0x7f080036;
         public static final int grayscale=0x7f080012;
         public static final int holo_dark=0x7f080005;
         public static final int holo_light=0x7f080006;
         public static final int hybrid=0x7f080004;
         public static final int imageView1=0x7f080018;
-        public static final int installationDate=0x7f080036;
+        public static final int inTime=0x7f080035;
+        public static final int installationDate=0x7f080044;
+        public static final int leafWetnes=0x7f08003e;
         public static final int loginButton=0x7f080017;
         public static final int loginTip=0x7f080014;
         public static final int match_parent=0x7f08000c;
         public static final int method=0x7f08002f;
         public static final int monochrome=0x7f080013;
-        public static final int name=0x7f080034;
+        public static final int name=0x7f080042;
         public static final int navList=0x7f080031;
         public static final int navigation_drawer=0x7f08001b;
-        public static final int newAlert=0x7f080038;
+        public static final int newAlert=0x7f080046;
         public static final int none=0x7f080000;
         public static final int normal=0x7f080001;
         public static final int notiImage=0x7f08001c;
@@ -468,22 +477,28 @@ containing a value of this type.
         public static final int openActivity=0x7f08001f;
         public static final int password=0x7f080016;
         public static final int production=0x7f080007;
+        public static final int relHumidity=0x7f080039;
         public static final int sandbox=0x7f080008;
         public static final int satellite=0x7f080002;
         public static final int saveAlert=0x7f08002b;
-        public static final int search=0x7f08003b;
+        public static final int search=0x7f080049;
         public static final int section_label=0x7f080030;
         public static final int selectionDetails=0x7f08000b;
         public static final int singleAlertLayout=0x7f080020;
         public static final int slideWsuLogo=0x7f080032;
+        public static final int soilTemp=0x7f08003f;
+        public static final int solarRad=0x7f08003d;
         public static final int stationName=0x7f08002e;
         public static final int stationsList=0x7f080022;
-        public static final int stations_list=0x7f080037;
+        public static final int stations_list=0x7f080045;
         public static final int strict_sandbox=0x7f080009;
+        public static final int temperature=0x7f080038;
         public static final int terrain=0x7f080003;
-        public static final int thumbnail=0x7f080033;
+        public static final int thumbnail=0x7f080041;
+        public static final int todayRain=0x7f08003c;
         public static final int unitTypeList=0x7f080025;
         public static final int username=0x7f080015;
+        public static final int wind=0x7f08003b;
         public static final int wrap_content=0x7f08000d;
     }
     public static final class integer {
@@ -499,9 +514,10 @@ containing a value of this type.
         public static final int alertslist_row=0x7f030006;
         public static final int fragment_main=0x7f030007;
         public static final int fragment_navigation_drawer=0x7f030008;
-        public static final int searchable=0x7f030009;
-        public static final int station_list_row=0x7f03000a;
-        public static final int stations_listview=0x7f03000b;
+        public static final int fragment_single_station=0x7f030009;
+        public static final int searchable=0x7f03000a;
+        public static final int station_list_row=0x7f03000b;
+        public static final int stations_listview=0x7f03000c;
     }
     public static final class menu {
         public static final int alerts=0x7f0b0000;
@@ -513,6 +529,9 @@ containing a value of this type.
         public static final int stations=0x7f0b0006;
     }
     public static final class string {
+        public static final int _8_soil_temp=0x7f070042;
+        public static final int _f=0x7f070044;
+        public static final int _percent=0x7f070047;
         public static final int action_example=0x7f070037;
         public static final int action_settings=0x7f07001c;
         public static final int address=0x7f070021;
@@ -633,15 +652,20 @@ containing a value of this type.
         /**  Long form sign-in button text [CHAR LIMIT=30] 
          */
         public static final int common_signin_button_text_long=0x7f070018;
+        public static final int date_installed=0x7f070043;
         public static final int delivery_status=0x7f070022;
+        public static final int dew_point=0x7f07003b;
         public static final int edit_alert=0x7f07002f;
         public static final int enter_email=0x7f070027;
         public static final int enter_password=0x7f070028;
         public static final int hello_world=0x7f07001b;
+        public static final int in=0x7f070045;
         public static final int incorrect_login_combination=0x7f07002a;
+        public static final int leaf_wetness=0x7f070041;
         public static final int login=0x7f070029;
         public static final int logotext=0x7f07002b;
         public static final int method=0x7f070020;
+        public static final int mph=0x7f070046;
         public static final int name=0x7f070025;
         public static final int navHome=0x7f070039;
         public static final int navMyAlerts=0x7f070033;
@@ -649,22 +673,29 @@ containing a value of this type.
         public static final int navigation_drawer_close=0x7f070036;
         public static final int navigation_drawer_open=0x7f070035;
         public static final int new_alert=0x7f070030;
+        public static final int relative_humidity=0x7f07003c;
         public static final int save=0x7f070031;
         public static final int search_stations=0x7f070038;
         public static final int service_provider=0x7f07002c;
+        public static final int solar_rad_=0x7f070040;
         public static final int start_time=0x7f07002d;
         public static final int station=0x7f07001f;
+        public static final int temperature=0x7f07003d;
         public static final int title_activity_login=0x7f070026;
         public static final int title_activity_main=0x7f070032;
         public static final int title_activity_notification_display_route=0x7f07002e;
         public static final int title_activity_searchable=0x7f07003a;
         public static final int title_activity_single_alert=0x7f07001d;
+        public static final int today_apos_s_rain=0x7f07003f;
         public static final int treshold_value=0x7f07001e;
         public static final int unit_type=0x7f070023;
+        public static final int unity=0x7f070049;
+        public static final int w_m2=0x7f070048;
         /**  Text on a placeholder buy button when Google Play services is not
          available or up-to-date 
          */
         public static final int wallet_buy_button_place_holder=0x7f070019;
+        public static final int wind=0x7f07003e;
     }
     public static final class style {
         public static final int AppTheme=0x7f050005;

@@ -13,6 +13,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import android.app.Activity;
+import android.app.FragmentTransaction;
 import android.app.SearchManager;
 import android.content.Context;
 import android.os.AsyncTask;
@@ -27,7 +28,6 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import android.widget.SearchView;
-import android.widget.Toast;
 import edu.wsu.weather.agweathernet.CommonUtility;
 import edu.wsu.weather.agweathernet.MainActivity;
 import edu.wsu.weather.agweathernet.R;
@@ -61,7 +61,7 @@ public class StationsFragment extends BaseFragment {
 		loadServerData();
 
 		setEventListeners();
-		// ((MainActivity) getActivity()).setActionBarTitle("Stations");
+		
 		return rootView;
 	}
 
@@ -95,8 +95,25 @@ public class StationsFragment extends BaseFragment {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
-				Toast.makeText(context, "item click", Toast.LENGTH_SHORT)
-						.show();
+				StationModel selectedModel = (StationModel) stationsModelList
+						.get(position);
+				Log.i(CommonUtility.STATIONS_TAG, "model = " + selectedModel);
+
+				SingleStationFragment newFrag = new SingleStationFragment();
+
+				Bundle args = new Bundle();
+
+				args.putString("id", selectedModel.getUnitId());
+
+				newFrag.setArguments(args);
+
+				FragmentTransaction transaction = getFragmentManager()
+						.beginTransaction();
+
+				transaction.replace(R.id.container, newFrag);
+				transaction.addToBackStack(null);
+
+				transaction.commit();
 			}
 		});
 	}

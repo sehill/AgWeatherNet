@@ -65,7 +65,7 @@ public class StationsAdapter extends BaseAdapter {
 		imageLoader.DisplayImage(uri, stationImg);
 
 		TextView name = (TextView) view.findViewById(R.id.name);
-		TextView county = (TextView) view.findViewById(R.id.county);
+		TextView county = (TextView) view.findViewById(R.id.countye);
 		TextView installationDate = (TextView) view
 				.findViewById(R.id.installationDate);
 
