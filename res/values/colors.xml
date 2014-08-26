@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <item name="def_spinner_enabled" type="color">#B0B0B0</item>
+    <item name="def_spinner_disabled" type="color">#666</item>
+
+</resources>

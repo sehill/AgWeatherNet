@@ -9,9 +9,11 @@
         android:id="@+id/editName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="5sp"
         android:enabled="false"
-        android:hint="@string/name" />
+        android:fontFamily="Tahoma"
+        android:hint="@string/name"
+        android:textColor="@color/textview_default"
+        android:textSize="16sp" />
 
     <Spinner
         android:id="@+id/stationsList"
@@ -19,7 +21,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/editName"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="5sp" />
+        android:paddingLeft="8sp" />
 
     <Spinner
         android:id="@+id/alertEventList"
@@ -27,16 +29,18 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/stationsList"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="5sp" />
+        android:paddingLeft="8sp" />
 
     <EditText
         android:id="@+id/editTresholdValue"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/alertEventList"
-        android:layout_marginTop="5sp"
         android:enabled="false"
-        android:hint="@string/treshold_value" />
+        android:fontFamily="Tahoma"
+        android:hint="@string/treshold_value"
+        android:textColor="@color/textview_default"
+        android:textSize="16sp" />
 
     <Spinner
         android:id="@+id/unitTypeList"
@@ -44,7 +48,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/editTresholdValue"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="5sp" />
+        android:paddingLeft="8sp" />
 
     <Spinner
         android:id="@+id/alertMethodList"
@@ -52,16 +56,17 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/unitTypeList"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="5sp" />
+        android:paddingLeft="8sp" />
 
     <EditText
         android:id="@+id/editAddress"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/alertMethodList"
-        android:layout_marginTop="5sp"
         android:enabled="false"
-        android:hint="@string/address" />
+        android:hint="@string/address"
+        android:textColor="@color/textview_default"
+        android:textSize="16sp" />
 
     <Spinner
         android:id="@+id/deliveryStatusList"
@@ -69,26 +74,28 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/editAddress"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="5sp" />
+        android:paddingLeft="8sp" />
 
     <EditText
         android:id="@+id/editServiceProvider"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/deliveryStatusList"
-        android:layout_marginTop="5sp"
         android:enabled="false"
-        android:hint="@string/service_provider" />
+        android:hint="@string/service_provider"
+        android:textColor="@color/textview_default"
+        android:textSize="16sp" />
 
     <EditText
         android:id="@+id/editStartTime"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/editServiceProvider"
-        android:layout_marginTop="5sp"
         android:enabled="false"
-        android:visibility="invisible"
-        android:hint="@string/start_time" />
+        android:hint="@string/start_time"
+        android:textColor="@color/textview_default"
+        android:textSize="16sp"
+        android:visibility="invisible" />
 
     <Button
         android:id="@+id/saveAlert"
@@ -97,7 +104,6 @@
         android:layout_alignParentRight="true"
         android:layout_below="@+id/editStartTime"
         android:layout_marginRight="2sp"
-        android:layout_marginTop="5sp"
         android:background="@drawable/buttonshape"
         android:text="@string/save"
         android:textColor="#D1D1D1"

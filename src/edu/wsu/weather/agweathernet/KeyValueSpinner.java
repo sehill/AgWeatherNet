@@ -3,7 +3,9 @@ package edu.wsu.weather.agweathernet;
 import java.util.List;
 
 import android.content.Context;
+import android.content.res.ColorStateList;
 import android.database.DataSetObserver;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -59,7 +61,7 @@ public class KeyValueSpinner implements SpinnerAdapter {
 				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
 		TextView textview = (TextView) inflater.inflate(
-				android.R.layout.simple_spinner_item, null);
+				R.layout.spinner_default_item, null);
 
 		textview.setText(list.get(position).getValue());
 
@@ -97,11 +99,10 @@ public class KeyValueSpinner implements SpinnerAdapter {
 				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
 		TextView textview = (TextView) inflater.inflate(
-				android.R.layout.simple_spinner_item, null);
+				R.layout.spinner_default_item, null);
 
 		textview.setText(list.get(position).getValue());
 
 		return textview;
 	}
-
 }

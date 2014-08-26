@@ -399,7 +399,6 @@ public class SingleAlertActivity extends Activity {
 	}
 
 	private void setFieldsContent(AlertsModel model) {
-		editName.setText(model.reportName);
 
 		KeyValueSpinner spinnerAdapter = (KeyValueSpinner) stationsSpinner
 				.getAdapter();
@@ -426,6 +425,7 @@ public class SingleAlertActivity extends Activity {
 		selectedPosition = spinnerAdapter.getIndexById(model.deliveryStatus);
 		deliveryStatusSpinner.setSelection(selectedPosition);
 
+		editName.setText(model.reportName);
 		editTresholdValue.setText(model.tresholdValue);
 		editAddress.setText(model.address);
 		editServiceProvider.setText(model.serviceProvider);

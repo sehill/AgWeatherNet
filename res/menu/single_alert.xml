@@ -5,11 +5,13 @@
 
     <item
         android:id="@+id/editAlert"
+        android:icon="@drawable/edit"
         android:orderInCategory="103"
         android:showAsAction="withText|ifRoom"
         android:title="@string/edit_alert"/>
     <item
         android:id="@+id/newAlert"
+        android:icon="@drawable/plus"
         android:orderInCategory="102"
         android:title="@string/new_alert"/>
 

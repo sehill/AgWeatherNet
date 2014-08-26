@@ -1,5 +1,6 @@
 package edu.wsu.weather.agweathernet.fragments;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,6 +33,7 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
@@ -176,7 +178,8 @@ public class SingleAlertFragment extends BaseFragment {
 					Log.e(CommonUtility.SINGLE_ALERT_ACT_STR, ex.getMessage());
 				}
 
-				KeyValueSpinner adapter = new KeyValueSpinner(context, options);
+				KeyValueSpinner adapter = new KeyValueSpinner(getActivity(),
+						options);
 
 				sp.setAdapter(adapter);
 

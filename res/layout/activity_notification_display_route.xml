@@ -14,7 +14,7 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="15dp"
-        android:src="@drawable/alert144" />
+        android:src="@drawable/alert" />
 
     <TextView
         android:id="@+id/notiTitle"

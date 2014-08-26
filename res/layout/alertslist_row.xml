@@ -9,6 +9,7 @@
         android:id="@+id/alertName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textColor="#000"
         android:textSize="22sp" />
 
     <TextView
@@ -16,15 +17,16 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/alertName"
-        android:textSize="17sp"  />
+        android:textColor="#000"
+        android:textSize="17sp" />
 
     <TextView
         android:id="@+id/method"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/alertName"
-        android:layout_toRightOf="@+id/stationName"
         android:layout_marginLeft="20sp"
-        android:textSize="17sp"  />
-    
+        android:layout_toRightOf="@+id/stationName"
+        android:textSize="17sp" />
+
 </RelativeLayout>
