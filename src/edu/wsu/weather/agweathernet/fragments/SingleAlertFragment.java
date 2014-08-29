@@ -93,6 +93,8 @@ public class SingleAlertFragment extends BaseFragment {
 
 		setEventListeners();
 
+		((MainActivity) activity).onSectionAttached("Alert");
+
 		alertId = getArguments().getString("id");
 
 		if (alertId == null || alertId.isEmpty()) {
@@ -141,7 +143,6 @@ public class SingleAlertFragment extends BaseFragment {
 	@Override
 	public void onAttach(Activity activity) {
 		super.onAttach(activity);
-		((MainActivity) activity).onSectionAttached("Alert");
 	}
 
 	private void setSpinner(final Spinner sp, final String url) {

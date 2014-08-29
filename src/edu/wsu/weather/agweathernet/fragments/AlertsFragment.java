@@ -59,9 +59,8 @@ public class AlertsFragment extends BaseFragment {
 		alertsListView = (ListView) rootView.findViewById(R.id.alerts_list);
 
 		loadServerData();
-
+		((MainActivity) activity).onSectionAttached("My Alerts");
 		setEventListeners();
-		((MainActivity) getActivity()).setActionBarTitle("TEST");
 		return rootView;
 	}
 
@@ -100,7 +99,7 @@ public class AlertsFragment extends BaseFragment {
 	@Override
 	public void onAttach(Activity activity) {
 		super.onAttach(activity);
-		((MainActivity) activity).onSectionAttached("My Alerts");
+		// ((MainActivity) activity).onSectionAttached("My Alerts");
 	}
 
 	private void setEventListeners() {

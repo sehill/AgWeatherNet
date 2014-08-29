@@ -24,6 +24,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
@@ -38,16 +39,45 @@ public class StationsFragment extends BaseFragment {
 	ListView stationsListView;
 	StationsAdapter adapter;
 	ArrayList<StationModel> stationsModelList;
+	String searchQuery = "";
+	SearchView searchView;
+	SearchView.OnQueryTextListener queryTextListener;
 
 	public StationsFragment() {
 	}
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
+		Log.i(CommonUtility.STATIONS_TAG, "onCreate");
 		super.onCreate(savedInstanceState);
 		setHasOptionsMenu(true);
 		context = getActivity().getApplicationContext();
 		activity = getActivity();
+
+		queryTextListener = new SearchView.OnQueryTextListener() {
+
+			@Override
+			public boolean onQueryTextSubmit(String query) {
+				Log.i("SearchView.OnQueryTextListener", query);
+				searchQuery = query;
+				loadServerData();
+
+				InputMethodManager imm = (InputMethodManager) activity
+						.getSystemService(Context.INPUT_METHOD_SERVICE);
+				imm.hideSoftInputFromWindow(searchView.getWindowToken(), 0);
+				return false;
+			}
+
+			@Override
+			public boolean onQueryTextChange(String newText) {
+				Log.i("SearchView.OnQueryTextListener - onQueryTextChange",
+						newText);
+				searchQuery = newText;
+				loadServerData();
+				return false;
+			}
+		};
+
 	}
 
 	@Override
@@ -58,10 +88,17 @@ public class StationsFragment extends BaseFragment {
 
 		stationsListView = (ListView) rootView.findViewById(R.id.stations_list);
 
+		Bundle bundle = getArguments();
+		if (bundle != null) {
+			searchQuery = getArguments().getString("searchQuery");
+			Log.i(CommonUtility.STATIONS_TAG, searchQuery);
+		}
+
 		loadServerData();
+		((MainActivity) activity).onSectionAttached("Stations");
 
 		setEventListeners();
-		
+
 		return rootView;
 	}
 
@@ -76,17 +113,19 @@ public class StationsFragment extends BaseFragment {
 				.getActionView();
 		searchView.setSearchableInfo(searchManager.getSearchableInfo(activity
 				.getComponentName()));
+		this.searchView = searchView;
+		searchView.setOnQueryTextListener(queryTextListener);
 	}
 
 	@Override
 	public void onResume() {
 		super.onResume();
+		loadServerData();
 	}
 
 	@Override
 	public void onAttach(Activity activity) {
 		super.onAttach(activity);
-		((MainActivity) activity).onSectionAttached("Stations");
 	}
 
 	private void setEventListeners() {
@@ -133,8 +172,9 @@ public class StationsFragment extends BaseFragment {
 
 			HttpClient httpClient = new DefaultHttpClient();
 
-			String API_URL = CommonUtility.HOST_URL + "test/stations.php?n=10";
-
+			String API_URL = CommonUtility.HOST_URL
+					+ "test/stations.php?n=30&name=" + searchQuery;
+			Log.i(CommonUtility.STATIONS_TAG, API_URL);
 			HttpGet get = new HttpGet(API_URL);
 
 			String resultString = "Doing in background";

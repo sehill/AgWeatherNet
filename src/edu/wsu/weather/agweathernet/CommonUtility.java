@@ -1,11 +1,5 @@
 package edu.wsu.weather.agweathernet;
 
-import java.util.HashMap;
-import java.util.Map;
-
-import android.app.Fragment;
-import edu.wsu.weather.agweathernet.fragments.*;
-
 public class CommonUtility {
 	public static final String HOST_URL = "http://bartlett.prosser.wsu.edu:8080/";
 	public static final String SENDER_ID = "112870244412";
@@ -17,14 +11,8 @@ public class CommonUtility {
 	public final static String SINGLE_ALERT_ACT_STR = "SingleAlertActivity";
 	public final static String STATIONS_TAG = "StationsFragment";
 	public final static String SINGLE_STATION_TAG = "SingleStationFragment";
+	public final static String HTTP_REQUEST_WRAPPER = "HttpRequestWrapper";
 
-	public final static Map<Integer, Fragment> NAVIGATION_FRAGMENTS;
-	static {
-		NAVIGATION_FRAGMENTS = new HashMap<Integer, Fragment>();
-		NAVIGATION_FRAGMENTS.put(0, new HomeFragment());
-		NAVIGATION_FRAGMENTS.put(1, new AlertsFragment());
-		NAVIGATION_FRAGMENTS.put(2, new StationsFragment());
-		
-	}
-
+	public static final String MAIN_ACTIVITY = "MainActivity";
+	public static final String NAVIGATION_DRAWER_FRAG_TAG = "NavigationDrawerFragment";
 }

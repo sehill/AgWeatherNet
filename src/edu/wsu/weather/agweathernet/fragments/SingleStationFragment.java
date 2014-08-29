@@ -21,6 +21,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import edu.wsu.weather.agweathernet.CommonUtility;
+import edu.wsu.weather.agweathernet.MainActivity;
 import edu.wsu.weather.agweathernet.R;
 import edu.wsu.weather.agweathernet.helpers.ImageLoader;
 
@@ -45,6 +46,7 @@ public class SingleStationFragment extends Fragment {
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
+		Log.i(CommonUtility.SINGLE_STATION_TAG, "onCreate");
 		super.onCreate(savedInstanceState);
 		context = getActivity().getApplicationContext();
 		activity = getActivity();
@@ -60,6 +62,8 @@ public class SingleStationFragment extends Fragment {
 
 		stationId = getArguments().getString("id");
 
+		((MainActivity) activity).onSectionAttached("Station");
+
 		if (stationId == null || stationId.isEmpty()) {
 			// TODO stationId was null do something and log.
 		} else {
@@ -73,6 +77,11 @@ public class SingleStationFragment extends Fragment {
 
 		return rootView;
 
+	}
+
+	@Override
+	public void onAttach(Activity activity) {
+		super.onAttach(activity);
 	}
 
 	private void getStationById() {

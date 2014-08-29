@@ -1,5 +1,7 @@
 package edu.wsu.weather.agweathernet;
 
+import java.util.Map;
+
 import android.app.ActionBar;
 import android.app.Activity;
 import android.app.Fragment;
@@ -10,6 +12,7 @@ import android.preference.PreferenceManager;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -28,6 +31,15 @@ import android.widget.ListView;
  * implemented here.
  */
 public class NavigationDrawerFragment extends Fragment {
+
+	/**
+	 * set selected menu item position from outside
+	 */
+
+	/**
+	 * set extra variable for the Fragment to be selected TODO is
+	 * selectedPosition necessary?
+	 */
 
 	/**
 	 * Remember the position of the selected item.
@@ -79,7 +91,14 @@ public class NavigationDrawerFragment extends Fragment {
 		}
 
 		// Select either the default item (0) or the last selected item.
-		selectItem(mCurrentSelectedPosition);
+		// public Map<String, String> extras;
+		// public int selectedPosition;
+		MainActivity ma = (MainActivity) getActivity();
+
+		if (ma.extras != null) {
+			mCurrentSelectedPosition = ma.selectedPosition;
+		}
+		selectItem(mCurrentSelectedPosition, ma.extras);
 	}
 
 	@Override
@@ -103,16 +122,19 @@ public class NavigationDrawerFragment extends Fragment {
 					@Override
 					public void onItemClick(AdapterView<?> parent, View view,
 							int position, long id) {
-						selectItem(position);
+						selectItem(position, null);
 					}
 				});
+
 		mDrawerListView.setAdapter(new ArrayAdapter<String>(getActionBar()
 				.getThemedContext(),
 				android.R.layout.simple_list_item_activated_1,
 				android.R.id.text1, new String[] { getString(R.string.navHome),
 						getString(R.string.navMyAlerts),
 						getString(R.string.navStations) }));
+
 		mDrawerListView.setItemChecked(mCurrentSelectedPosition, true);
+
 		return v;
 	}
 
@@ -210,7 +232,9 @@ public class NavigationDrawerFragment extends Fragment {
 		mDrawerLayout.setDrawerListener(mDrawerToggle);
 	}
 
-	private void selectItem(int position) {
+	private void selectItem(int position, Map<String, String> extras) {
+		Log.i(CommonUtility.NAVIGATION_DRAWER_FRAG_TAG,
+				"selectItem()  position = " + position + " extras = " + extras);
 		mCurrentSelectedPosition = position;
 		if (mDrawerListView != null) {
 			mDrawerListView.setItemChecked(position, true);
@@ -219,7 +243,9 @@ public class NavigationDrawerFragment extends Fragment {
 			mDrawerLayout.closeDrawer(mFragmentContainerView);
 		}
 		if (mCallbacks != null) {
-			mCallbacks.onNavigationDrawerItemSelected(position);
+			Log.i(CommonUtility.NAVIGATION_DRAWER_FRAG_TAG,
+					"selectItem() mCallbacks != null");
+			mCallbacks.onNavigationDrawerItemSelected(position, extras);
 		}
 	}
 
@@ -305,6 +331,7 @@ public class NavigationDrawerFragment extends Fragment {
 		/**
 		 * Called when an item in the navigation drawer is selected.
 		 */
-		void onNavigationDrawerItemSelected(int position);
+		void onNavigationDrawerItemSelected(int position,
+				Map<String, String> extras);
 	}
 }

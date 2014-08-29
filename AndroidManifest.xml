@@ -13,6 +13,7 @@
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
     <permission
         android:name="edu.wsu.weather.agweathernet.permission.C2D_MESSAGE"
@@ -73,15 +74,26 @@
             android:label="@string/title_activity_main"
             android:screenOrientation="locked" >
             <meta-data
-                android:name="android.app.searchable"
-                android:resource="@xml/searchable" />
+                android:name="android.app.default_searchable"
+                android:value=".SearchableActivity" />
         </activity>
         <activity
             android:name=".SearchableActivity"
             android:label="@string/title_activity_searchable" >
-            <intent-filter>
+
+            <!--
+                 <intent-filter>
                 <action android:name="android.intent.action.SEARCH" />
-            </intent-filter>
+            </intent-filter>
+            -->
+
+
+            <!--
+                 <meta-data
+                android:name="android.app.searchable"
+                android:resource="@xml/searchable" />
+            -->
+
         </activity>
     </application>
 

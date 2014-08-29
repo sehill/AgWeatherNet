@@ -5,12 +5,12 @@ import android.app.SearchManager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.widget.Toast;
 
 public class SearchableActivity extends Activity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
+		setTitle("Searchable");
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_searchable);
 		Log.i("Searchable", "onCreate");
@@ -27,8 +27,13 @@ public class SearchableActivity extends Activity {
 		if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
 			String query = intent.getStringExtra(SearchManager.QUERY);
 			Log.i("Searchable", "handleIntent  q = " + query);
-			Toast.makeText(getApplicationContext(), query, Toast.LENGTH_LONG)
-					.show();
+
+			Intent newIntent = new Intent();
+			newIntent.setClass(getApplicationContext(), MainActivity.class);
+			newIntent.putExtra("fragment", "stations");
+			newIntent.putExtra("searchQuery", query);
+			startActivity(newIntent);
+			// finish();
 		}
 	}
 }

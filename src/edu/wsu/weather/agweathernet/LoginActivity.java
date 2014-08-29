@@ -390,7 +390,7 @@ public class LoginActivity extends Activity {
 
 					sendRegistrationIdToBackend();
 
-					openActivity(AlertsActivity.class);
+					openActivity(MainActivity.class);
 
 				} else if (res.equals("wu")) { // Wrong User
 					LoginActivity.this.password

@@ -339,11 +339,15 @@ containing a value of this type.
         public static final int common_signin_btn_light_text_disabled=0x7f060006;
         public static final int common_signin_btn_light_text_focused=0x7f060007;
         public static final int common_signin_btn_light_text_pressed=0x7f060005;
-        public static final int common_signin_btn_text_dark=0x7f060019;
-        public static final int common_signin_btn_text_light=0x7f06001a;
+        public static final int common_signin_btn_text_dark=0x7f06001d;
+        public static final int common_signin_btn_text_light=0x7f06001e;
+        public static final int def_agweathernet=0x7f060019;
         public static final int def_spinner_disabled=0x7f060018;
         public static final int def_spinner_enabled=0x7f060017;
-        public static final int textview_default=0x7f06001b;
+        public static final int def_white=0x7f06001c;
+        public static final int default_background=0x7f06001b;
+        public static final int defaultcolor=0x7f06001a;
+        public static final int textview_default=0x7f06001f;
         public static final int wallet_bright_foreground_disabled_holo_light=0x7f06000f;
         /** 
          Wallet colors to support consistent Wallet fragment holo dark UI in client application
@@ -362,8 +366,8 @@ containing a value of this type.
         public static final int wallet_hint_foreground_holo_light=0x7f060011;
         public static final int wallet_holo_blue_light=0x7f060015;
         public static final int wallet_link_text_light=0x7f060016;
-        public static final int wallet_primary_text_holo_light=0x7f06001c;
-        public static final int wallet_secondary_text_holo_dark=0x7f06001d;
+        public static final int wallet_primary_text_holo_light=0x7f060020;
+        public static final int wallet_secondary_text_holo_dark=0x7f060021;
     }
     public static final class dimen {
         /**  Default screen margins, per the Android Design guidelines. 
@@ -420,11 +424,12 @@ containing a value of this type.
         public static final int plus=0x7f020027;
         public static final int powered_by_google_dark=0x7f020028;
         public static final int powered_by_google_light=0x7f020029;
-        public static final int wsu=0x7f02002a;
-        public static final int wsu_logontext=0x7f02002b;
+        public static final int titlebg=0x7f02002a;
+        public static final int wsu=0x7f02002b;
+        public static final int wsu_logontext=0x7f02002c;
     }
     public static final class id {
-        public static final int action_settings=0x7f080047;
+        public static final int action_settings=0x7f080055;
         public static final int alertEventList=0x7f080023;
         public static final int alertMethodList=0x7f080026;
         public static final int alertName=0x7f08002d;
@@ -436,13 +441,13 @@ containing a value of this type.
         public static final int classic=0x7f080011;
         public static final int container=0x7f08001a;
         public static final int county=0x7f080034;
-        public static final int countye=0x7f080043;
+        public static final int countye=0x7f080051;
         public static final int dateInstalled=0x7f080040;
         public static final int deliveryStatusList=0x7f080028;
         public static final int dewPoint=0x7f08003a;
         public static final int drawer_layout=0x7f080019;
         public static final int editAddress=0x7f080027;
-        public static final int editAlert=0x7f080048;
+        public static final int editAlert=0x7f080056;
         public static final int editName=0x7f080021;
         public static final int editServiceProvider=0x7f080029;
         public static final int editStartTime=0x7f08002a;
@@ -455,18 +460,21 @@ containing a value of this type.
         public static final int holo_light=0x7f080006;
         public static final int hybrid=0x7f080004;
         public static final int imageView1=0x7f080018;
+        public static final int imgviewStation=0x7f080045;
         public static final int inTime=0x7f080035;
-        public static final int installationDate=0x7f080044;
+        public static final int installationDate=0x7f080052;
         public static final int leafWetnes=0x7f08003e;
         public static final int loginButton=0x7f080017;
         public static final int loginTip=0x7f080014;
         public static final int match_parent=0x7f08000c;
         public static final int method=0x7f08002f;
         public static final int monochrome=0x7f080013;
-        public static final int name=0x7f080042;
+        public static final int name=0x7f080050;
         public static final int navList=0x7f080031;
         public static final int navigation_drawer=0x7f08001b;
-        public static final int newAlert=0x7f080046;
+        public static final int nearestStationDetails=0x7f080046;
+        public static final int nearestStationView=0x7f080041;
+        public static final int newAlert=0x7f080054;
         public static final int none=0x7f080000;
         public static final int normal=0x7f080001;
         public static final int notiImage=0x7f08001c;
@@ -479,21 +487,32 @@ containing a value of this type.
         public static final int sandbox=0x7f080008;
         public static final int satellite=0x7f080002;
         public static final int saveAlert=0x7f08002b;
-        public static final int search=0x7f080049;
+        public static final int search=0x7f080057;
         public static final int section_label=0x7f080030;
         public static final int selectionDetails=0x7f08000b;
         public static final int singleAlertLayout=0x7f080020;
         public static final int slideWsuLogo=0x7f080032;
         public static final int soilTemp=0x7f08003f;
         public static final int solarRad=0x7f08003d;
+        public static final int staticNearestStationTitle=0x7f080042;
+        public static final int staticNewsTitle=0x7f08004b;
         public static final int stationName=0x7f08002e;
         public static final int stationsList=0x7f080022;
-        public static final int stations_list=0x7f080045;
+        public static final int stations_list=0x7f080053;
         public static final int strict_sandbox=0x7f080009;
         public static final int temperature=0x7f080038;
         public static final int terrain=0x7f080003;
-        public static final int thumbnail=0x7f080041;
+        public static final int thumbnail=0x7f08004f;
         public static final int todayRain=0x7f08003c;
+        public static final int txtviewDewpoint=0x7f080049;
+        public static final int txtviewDewpowefwefnt=0x7f08004d;
+        public static final int txtviewHumidity=0x7f080047;
+        public static final int txtviewName=0x7f080043;
+        public static final int txtviewRain=0x7f08004a;
+        public static final int txtviewRawefwefin=0x7f08004e;
+        public static final int txtviewTemp=0x7f080044;
+        public static final int txtviewWind=0x7f080048;
+        public static final int txtviewWwefwefind=0x7f08004c;
         public static final int unitTypeList=0x7f080025;
         public static final int username=0x7f080015;
         public static final int wind=0x7f08003b;
@@ -513,10 +532,11 @@ containing a value of this type.
         public static final int fragment_main=0x7f030007;
         public static final int fragment_navigation_drawer=0x7f030008;
         public static final int fragment_single_station=0x7f030009;
-        public static final int searchable=0x7f03000a;
-        public static final int spinner_default_item=0x7f03000b;
-        public static final int station_list_row=0x7f03000c;
-        public static final int stations_listview=0x7f03000d;
+        public static final int home_layout=0x7f03000a;
+        public static final int searchable=0x7f03000b;
+        public static final int spinner_default_item=0x7f03000c;
+        public static final int station_list_row=0x7f03000d;
+        public static final int stations_listview=0x7f03000e;
     }
     public static final class menu {
         public static final int alerts=0x7f0b0000;
