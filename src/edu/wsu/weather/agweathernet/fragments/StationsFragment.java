@@ -167,14 +167,16 @@ public class StationsFragment extends BaseFragment {
 
 		@Override
 		protected ArrayList<StationModel> doInBackground(Void... arg0) {
-
 			stationsModelList = new ArrayList<StationModel>();
 
 			HttpClient httpClient = new DefaultHttpClient();
 
 			String API_URL = CommonUtility.HOST_URL
-					+ "test/stations.php?n=30&name=" + searchQuery;
+					+ "test/stations.php?uname=" + getUserName()
+					+ "&n=30&name=" + searchQuery;
+
 			Log.i(CommonUtility.STATIONS_TAG, API_URL);
+
 			HttpGet get = new HttpGet(API_URL);
 
 			String resultString = "Doing in background";
@@ -198,6 +200,8 @@ public class StationsFragment extends BaseFragment {
 					model.setCounty(jobj.getString("county"));
 					model.setInstallationDate(jobj
 							.getString("installation_date"));
+					model.setFavourite(jobj.getString("isFavourite") != null
+							&& jobj.getString("isFavourite").equals("true"));
 					stationsModelList.add(model);
 				}
 				Log.i(CommonUtility.STATIONS_TAG,

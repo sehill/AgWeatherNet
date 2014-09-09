@@ -1,10 +1,16 @@
 package edu.wsu.weather.agweathernet.helpers;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
+import org.apache.http.ParseException;
+
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
@@ -64,6 +70,15 @@ public class StationsAdapter extends BaseAdapter {
 				+ stationModel.getUnitId() + "_N.JPG";
 		imageLoader.DisplayImage(uri, stationImg);
 
+		ImageView favourite = (ImageView) view
+				.findViewById(R.id.addToFavourites);
+		if (stationModel.isFavourite()) {
+			setFavouriteImage(favourite, R.drawable.star);
+		} else {
+			setFavouriteImage(favourite, R.drawable.star_disabled);
+		}
+		setFavouriteClickListener(favourite, stationModel);
+
 		TextView name = (TextView) view.findViewById(R.id.name);
 		TextView county = (TextView) view.findViewById(R.id.countye);
 		TextView installationDate = (TextView) view
@@ -79,5 +94,53 @@ public class StationsAdapter extends BaseAdapter {
 	@Override
 	public boolean isEmpty() {
 		return stationList.isEmpty();
+	}
+
+	private void setFavouriteClickListener(final ImageView favourite,
+			final StationModel stationModel) {
+		favourite.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				final int favImage;
+				final String url;
+				// TODO take shared preferences object out for common use.
+				SharedPreferences prefs = ctx.getSharedPreferences(
+						"edu.wsu.weather.agweathernet", Context.MODE_PRIVATE);
+				String username = prefs.getString("username", "");
+				if (stationModel.isFavourite()) {
+					favImage = R.drawable.star_disabled;
+					url = "test/commonmanager.php?qname=rem_fav&uname="
+							+ username + "&stationId="
+							+ stationModel.getUnitId();
+				} else {
+					favImage = R.drawable.star;
+					url = "test/commonmanager.php?qname=add_fav&uname="
+							+ username + "&stationId="
+							+ stationModel.getUnitId();
+				}
+				new AsyncTask<Void, Void, String>() {
+					protected String doInBackground(Void... arg0) {
+						try {
+							String response = HttpRequestWrapper
+									.getString(CommonUtility.HOST_URL + url);
+							return response;
+						} catch (ParseException e) {
+							e.printStackTrace();
+						} catch (IOException e) {
+							e.printStackTrace();
+						}
+						return "";
+					};
+
+					protected void onPostExecute(String result) {
+						setFavouriteImage(favourite, favImage);
+					};
+				}.execute();
+			}
+		});
+	}
+
+	private void setFavouriteImage(ImageView favourite, int id) {
+		favourite.setImageDrawable(ctx.getResources().getDrawable(id));
 	}
 }

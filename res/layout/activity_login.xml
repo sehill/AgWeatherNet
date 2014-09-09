@@ -55,6 +55,6 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:contentDescription="@string/logotext"
-        android:src="@drawable/wsu_logontext" />
+        android:src="@drawable/wsu_logontext_old" />
 
 </RelativeLayout>

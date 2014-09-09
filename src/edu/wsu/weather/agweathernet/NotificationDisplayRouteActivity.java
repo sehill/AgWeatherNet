@@ -66,14 +66,15 @@ public class NotificationDisplayRouteActivity extends Activity {
 
 		switch (model.type) {
 		case "alert":
-			int alertImageId = getResources().getIdentifier("alert192",
-					"drawable", "edu.wsu.weather.agweathernet");
-			imageView.setImageResource(alertImageId);
-			openActivity.setText("Open original alert");
-			intent = new Intent();
-			intent.putExtra("id", model.objId);
-			intent.setClass(NotificationDisplayRouteActivity.this,
-					SingleAlertActivity.class);
+			// TODO open single alert fragment.
+			// int alertImageId = getResources().getIdentifier("alert192",
+			// "drawable", "edu.wsu.weather.agweathernet");
+			// imageView.setImageResource(alertImageId);
+			// openActivity.setText("Open original alert");
+			// intent = new Intent();
+			// intent.putExtra("id", model.objId);
+			// intent.setClass(NotificationDisplayRouteActivity.this,
+			// SingleAlertActivity.class);
 			break;
 		default:
 			break;

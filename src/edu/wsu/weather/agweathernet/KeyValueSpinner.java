@@ -3,9 +3,7 @@ package edu.wsu.weather.agweathernet;
 import java.util.List;
 
 import android.content.Context;
-import android.content.res.ColorStateList;
 import android.database.DataSetObserver;
-import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;

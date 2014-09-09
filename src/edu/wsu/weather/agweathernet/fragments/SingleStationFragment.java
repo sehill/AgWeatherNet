@@ -10,8 +10,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.app.Activity;
-import android.app.Fragment;
-import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -25,10 +23,8 @@ import edu.wsu.weather.agweathernet.MainActivity;
 import edu.wsu.weather.agweathernet.R;
 import edu.wsu.weather.agweathernet.helpers.ImageLoader;
 
-public class SingleStationFragment extends Fragment {
+public class SingleStationFragment extends BaseFragment {
 	private String stationId;
-	private Context context;
-	private Activity activity;
 
 	private TextView stationName;
 	private TextView county;
@@ -91,7 +87,7 @@ public class SingleStationFragment extends Fragment {
 			protected String doInBackground(Void... params) {
 
 				String url = CommonUtility.HOST_URL + "test/stations.php?id="
-						+ stationId;
+						+ stationId + "&uname=" + getUserName();
 				HttpClient webClient = new DefaultHttpClient();
 				HttpGet get = new HttpGet(url);
 				try {
@@ -120,7 +116,6 @@ public class SingleStationFragment extends Fragment {
 				}
 			}
 		}.execute();
-
 	}
 
 	private void setFieldsContent(JSONObject model) throws JSONException {

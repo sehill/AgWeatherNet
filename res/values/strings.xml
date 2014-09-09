@@ -35,10 +35,10 @@
     <string name="navHome">Home</string>
     <string name="title_activity_searchable">SearchableActivity</string>
     <string name="dew_point">Dew point:</string>
-    <string name="relative_humidity">Relative Humidity:</string>
+    <string name="relative_humidity">Rel. Humidity:</string>
     <string name="temperature">Temperature:</string>
     <string name="wind">Wind:</string>
-    <string name="today_apos_s_rain">Today&amp;apos;s rain:</string>
+    <string name="today_apos_s_rain">Today\'s rain:</string>
     <string name="solar_rad_">Solar rad:</string>
     <string name="leaf_wetness">Leaf wetness:</string>
     <string name="_8_soil_temp">8 Soil temp:</string>
@@ -49,5 +49,7 @@
     <string name="_percent">%</string>
     <string name="w_m2">W/m2</string>
     <string name="unity">unity</string>
+    <string name="title_activity_google_play_services_result">GooglePlayServicesResultActivity</string>
+    <string name="blank">-</string>
 
 </resources>

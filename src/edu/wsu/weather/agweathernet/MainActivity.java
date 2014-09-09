@@ -8,7 +8,6 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
@@ -16,7 +15,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import edu.wsu.weather.agweathernet.fragments.AlertsFragment;
 import edu.wsu.weather.agweathernet.fragments.HomeFragment;
-import edu.wsu.weather.agweathernet.fragments.SingleStationFragment;
 import edu.wsu.weather.agweathernet.fragments.StationsFragment;
 
 public class MainActivity extends Activity implements

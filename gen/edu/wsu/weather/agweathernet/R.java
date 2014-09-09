@@ -424,12 +424,16 @@ containing a value of this type.
         public static final int plus=0x7f020027;
         public static final int powered_by_google_dark=0x7f020028;
         public static final int powered_by_google_light=0x7f020029;
-        public static final int titlebg=0x7f02002a;
-        public static final int wsu=0x7f02002b;
-        public static final int wsu_logontext=0x7f02002c;
+        public static final int star=0x7f02002a;
+        public static final int star_disabled=0x7f02002b;
+        public static final int titlebg=0x7f02002c;
+        public static final int wsu=0x7f02002d;
+        public static final int wsu_logontext=0x7f02002e;
+        public static final int wsu_logontext_old=0x7f02002f;
     }
     public static final class id {
-        public static final int action_settings=0x7f080055;
+        public static final int action_settings=0x7f080056;
+        public static final int addToFavourites=0x7f080051;
         public static final int alertEventList=0x7f080023;
         public static final int alertMethodList=0x7f080026;
         public static final int alertName=0x7f08002d;
@@ -441,13 +445,13 @@ containing a value of this type.
         public static final int classic=0x7f080011;
         public static final int container=0x7f08001a;
         public static final int county=0x7f080034;
-        public static final int countye=0x7f080051;
+        public static final int countye=0x7f080052;
         public static final int dateInstalled=0x7f080040;
         public static final int deliveryStatusList=0x7f080028;
         public static final int dewPoint=0x7f08003a;
         public static final int drawer_layout=0x7f080019;
         public static final int editAddress=0x7f080027;
-        public static final int editAlert=0x7f080056;
+        public static final int editAlert=0x7f080057;
         public static final int editName=0x7f080021;
         public static final int editServiceProvider=0x7f080029;
         public static final int editStartTime=0x7f08002a;
@@ -462,7 +466,7 @@ containing a value of this type.
         public static final int imageView1=0x7f080018;
         public static final int imgviewStation=0x7f080045;
         public static final int inTime=0x7f080035;
-        public static final int installationDate=0x7f080052;
+        public static final int installationDate=0x7f080053;
         public static final int leafWetnes=0x7f08003e;
         public static final int loginButton=0x7f080017;
         public static final int loginTip=0x7f080014;
@@ -474,7 +478,7 @@ containing a value of this type.
         public static final int navigation_drawer=0x7f08001b;
         public static final int nearestStationDetails=0x7f080046;
         public static final int nearestStationView=0x7f080041;
-        public static final int newAlert=0x7f080054;
+        public static final int newAlert=0x7f080055;
         public static final int none=0x7f080000;
         public static final int normal=0x7f080001;
         public static final int notiImage=0x7f08001c;
@@ -487,7 +491,7 @@ containing a value of this type.
         public static final int sandbox=0x7f080008;
         public static final int satellite=0x7f080002;
         public static final int saveAlert=0x7f08002b;
-        public static final int search=0x7f080057;
+        public static final int search=0x7f080058;
         public static final int section_label=0x7f080030;
         public static final int selectionDetails=0x7f08000b;
         public static final int singleAlertLayout=0x7f080020;
@@ -498,7 +502,7 @@ containing a value of this type.
         public static final int staticNewsTitle=0x7f08004b;
         public static final int stationName=0x7f08002e;
         public static final int stationsList=0x7f080022;
-        public static final int stations_list=0x7f080053;
+        public static final int stations_list=0x7f080054;
         public static final int strict_sandbox=0x7f080009;
         public static final int temperature=0x7f080038;
         public static final int terrain=0x7f080003;
@@ -522,21 +526,22 @@ containing a value of this type.
         public static final int google_play_services_version=0x7f090000;
     }
     public static final class layout {
-        public static final int activity_login=0x7f030000;
-        public static final int activity_main=0x7f030001;
-        public static final int activity_notification_display_route=0x7f030002;
-        public static final int activity_searchable=0x7f030003;
-        public static final int activity_single_alert=0x7f030004;
-        public static final int alerts_listview=0x7f030005;
-        public static final int alertslist_row=0x7f030006;
-        public static final int fragment_main=0x7f030007;
-        public static final int fragment_navigation_drawer=0x7f030008;
-        public static final int fragment_single_station=0x7f030009;
-        public static final int home_layout=0x7f03000a;
-        public static final int searchable=0x7f03000b;
-        public static final int spinner_default_item=0x7f03000c;
-        public static final int station_list_row=0x7f03000d;
-        public static final int stations_listview=0x7f03000e;
+        public static final int activity_google_play_services_result=0x7f030000;
+        public static final int activity_login=0x7f030001;
+        public static final int activity_main=0x7f030002;
+        public static final int activity_notification_display_route=0x7f030003;
+        public static final int activity_searchable=0x7f030004;
+        public static final int activity_single_alert=0x7f030005;
+        public static final int alerts_listview=0x7f030006;
+        public static final int alertslist_row=0x7f030007;
+        public static final int fragment_main=0x7f030008;
+        public static final int fragment_navigation_drawer=0x7f030009;
+        public static final int fragment_single_station=0x7f03000a;
+        public static final int home_layout=0x7f03000b;
+        public static final int searchable=0x7f03000c;
+        public static final int spinner_default_item=0x7f03000d;
+        public static final int station_list_row=0x7f03000e;
+        public static final int stations_listview=0x7f03000f;
     }
     public static final class menu {
         public static final int alerts=0x7f0b0000;
@@ -556,6 +561,7 @@ containing a value of this type.
         public static final int address=0x7f070021;
         public static final int alert_event=0x7f070024;
         public static final int app_name=0x7f07001a;
+        public static final int blank=0x7f07004b;
         /** 
          Button in confirmation dialog to enable Google Play services.  Clicking it
         will direct user to application settings of Google Play services where they
@@ -700,6 +706,7 @@ containing a value of this type.
         public static final int start_time=0x7f07002d;
         public static final int station=0x7f07001f;
         public static final int temperature=0x7f07003d;
+        public static final int title_activity_google_play_services_result=0x7f07004a;
         public static final int title_activity_login=0x7f070026;
         public static final int title_activity_main=0x7f070032;
         public static final int title_activity_notification_display_route=0x7f07002e;

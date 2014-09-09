@@ -8,6 +8,7 @@ public class StationModel implements Serializable {
 	private String name;
 	private String county;
 	private String installationDate;
+	private boolean isFavourite;
 
 	public StationModel() {
 
@@ -56,5 +57,13 @@ public class StationModel implements Serializable {
 	@Override
 	public String toString() {
 		return this.name + " " + this.county;
+	}
+
+	public boolean isFavourite() {
+		return isFavourite;
+	}
+
+	public void setFavourite(boolean isFavourite) {
+		this.isFavourite = isFavourite;
 	}
 }

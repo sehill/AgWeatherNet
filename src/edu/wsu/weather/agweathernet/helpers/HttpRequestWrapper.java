@@ -17,7 +17,8 @@ public class HttpRequestWrapper {
 	public HttpRequestWrapper() {
 	}
 
-	public String getString(String url) throws ParseException, IOException {
+	public static String getString(String url) throws ParseException,
+			IOException {
 
 		HttpClient httpClient = new DefaultHttpClient();
 
