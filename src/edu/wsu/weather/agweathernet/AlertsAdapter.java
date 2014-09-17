@@ -2,23 +2,30 @@ package edu.wsu.weather.agweathernet;
 
 import java.util.ArrayList;
 
-import edu.wsu.weather.agweathernet.R;
-
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.content.Context;
+import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
+import edu.wsu.weather.agweathernet.fragments.SingleAlertFragment;
 
 public class AlertsAdapter extends BaseAdapter {
 
 	Context ctx;
 	ArrayList<AlertsModel> alertsList;
+	FragmentManager fm;
 
-	public AlertsAdapter(Context ctx, ArrayList<AlertsModel> alertsList) {
+	public AlertsAdapter(Context ctx, ArrayList<AlertsModel> alertsList,
+			FragmentManager fm) {
 		this.ctx = ctx;
 		this.alertsList = alertsList;
+		this.fm = fm;
 	}
 
 	public void update(ArrayList<AlertsModel> alertsList) {
@@ -46,7 +53,7 @@ public class AlertsAdapter extends BaseAdapter {
 	}
 
 	@Override
-	public View getView(int position, View convertView, ViewGroup parent) {
+	public View getView(final int position, View convertView, ViewGroup parent) {
 		View view = convertView;
 
 		AlertsModel alertModel = alertsList.get(position);
@@ -65,6 +72,30 @@ public class AlertsAdapter extends BaseAdapter {
 		stationName.setText(alertModel.station);
 		method.setText(alertModel.alertEvent);
 
+		view.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				AlertsModel selectedModel = (AlertsModel) alertsList
+						.get(position);
+				Log.i(CommonUtility.ALERTS_ACT_STR, "model = " + selectedModel);
+
+				SingleAlertFragment newFrag = new SingleAlertFragment();
+
+				Bundle args = new Bundle();
+
+				args.putString("id", selectedModel.Id);
+
+				newFrag.setArguments(args);
+
+				FragmentTransaction transaction = fm.beginTransaction();
+
+				transaction.replace(R.id.container, newFrag);
+				transaction.addToBackStack(null);
+
+				transaction.commit();
+			}
+		});
 		return view;
 	}
 

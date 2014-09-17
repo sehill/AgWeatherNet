@@ -10,10 +10,14 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.app.Activity;
+import android.app.FragmentTransaction;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -25,6 +29,8 @@ import edu.wsu.weather.agweathernet.helpers.ImageLoader;
 
 public class SingleStationFragment extends BaseFragment {
 	private String stationId;
+	private String lat;
+	private String lng;
 
 	private TextView stationName;
 	private TextView county;
@@ -44,6 +50,7 @@ public class SingleStationFragment extends BaseFragment {
 	public void onCreate(Bundle savedInstanceState) {
 		Log.i(CommonUtility.SINGLE_STATION_TAG, "onCreate");
 		super.onCreate(savedInstanceState);
+		setHasOptionsMenu(true);
 		context = getActivity().getApplicationContext();
 		activity = getActivity();
 	}
@@ -73,6 +80,39 @@ public class SingleStationFragment extends BaseFragment {
 
 		return rootView;
 
+	}
+
+	@Override
+	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+		super.onCreateOptionsMenu(menu, inflater);
+		inflater.inflate(R.menu.station_single, menu);
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+		case R.id.openOnMap:
+			MapFragment newFrag = new MapFragment();
+
+			Bundle args = new Bundle();
+
+			args.putString("lat", lat);
+			args.putString("lng", lng);
+
+			newFrag.setArguments(args);
+
+			FragmentTransaction transaction = getFragmentManager()
+					.beginTransaction();
+
+			transaction.replace(R.id.container, newFrag);
+			transaction.addToBackStack(null);
+
+			transaction.commit();
+			return true;
+		default:
+			break;
+		}
+		return false;
 	}
 
 	@Override
@@ -131,6 +171,8 @@ public class SingleStationFragment extends BaseFragment {
 		wind.setText(model.getString("wind_speed"));
 		soilTemp.setText(model.getString("soil_temp_8_in"));
 		precip.setText(model.getString("precip"));
+		lat = model.getString("station_latdeg");
+		lng = model.getString("station_lngdeg");
 	}
 
 	private void initializeProperties(View rootView) {

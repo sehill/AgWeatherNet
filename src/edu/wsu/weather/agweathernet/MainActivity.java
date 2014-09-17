@@ -15,6 +15,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import edu.wsu.weather.agweathernet.fragments.AlertsFragment;
 import edu.wsu.weather.agweathernet.fragments.HomeFragment;
+import edu.wsu.weather.agweathernet.fragments.MapFragment;
 import edu.wsu.weather.agweathernet.fragments.StationsFragment;
 
 public class MainActivity extends Activity implements
@@ -94,6 +95,9 @@ public class MainActivity extends Activity implements
 			break;
 		case 2:
 			newFrag = new StationsFragment();
+			break;
+		case 3:
+			newFrag = new MapFragment();
 			break;
 		default:
 			newFrag = new HomeFragment();

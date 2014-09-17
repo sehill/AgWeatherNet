@@ -80,12 +80,19 @@ public class StationsAdapter extends BaseAdapter {
 		setFavouriteClickListener(favourite, stationModel);
 
 		TextView name = (TextView) view.findViewById(R.id.name);
+		TextView city = (TextView) view.findViewById(R.id.stationCity);
+		TextView state = (TextView) view.findViewById(R.id.stationState);
 		TextView county = (TextView) view.findViewById(R.id.countye);
 		TextView installationDate = (TextView) view
 				.findViewById(R.id.installationDate);
 
 		name.setText(stationModel.getName());
-		county.setText(stationModel.getCounty());
+		if (stationModel.getCity() != null && !stationModel.getCity().isEmpty()
+				&& !stationModel.getCity().equals("null")) {
+			city.setText(stationModel.getCity() + ",");
+		}
+		state.setText(stationModel.getState());
+		county.setText(stationModel.getCounty() + ",");
 		installationDate.setText(stationModel.getInstallationDate());
 
 		return view;

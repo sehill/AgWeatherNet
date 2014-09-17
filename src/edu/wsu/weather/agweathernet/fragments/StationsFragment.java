@@ -1,6 +1,8 @@
 package edu.wsu.weather.agweathernet.fragments;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 
 import org.apache.http.HttpResponse;
@@ -14,6 +16,7 @@ import org.json.JSONObject;
 
 import android.app.Activity;
 import android.app.FragmentTransaction;
+import android.app.ProgressDialog;
 import android.app.SearchManager;
 import android.content.Context;
 import android.os.AsyncTask;
@@ -42,6 +45,7 @@ public class StationsFragment extends BaseFragment {
 	String searchQuery = "";
 	SearchView searchView;
 	SearchView.OnQueryTextListener queryTextListener;
+	boolean showProgress = true;
 
 	public StationsFragment() {
 	}
@@ -51,8 +55,8 @@ public class StationsFragment extends BaseFragment {
 		Log.i(CommonUtility.STATIONS_TAG, "onCreate");
 		super.onCreate(savedInstanceState);
 		setHasOptionsMenu(true);
-		context = getActivity().getApplicationContext();
 		activity = getActivity();
+		context = activity.getApplicationContext();
 
 		queryTextListener = new SearchView.OnQueryTextListener() {
 
@@ -60,6 +64,8 @@ public class StationsFragment extends BaseFragment {
 			public boolean onQueryTextSubmit(String query) {
 				Log.i("SearchView.OnQueryTextListener", query);
 				searchQuery = query;
+				showProgress = true;
+
 				loadServerData();
 
 				InputMethodManager imm = (InputMethodManager) activity
@@ -73,7 +79,10 @@ public class StationsFragment extends BaseFragment {
 				Log.i("SearchView.OnQueryTextListener - onQueryTextChange",
 						newText);
 				searchQuery = newText;
+				showProgress = false;
+
 				loadServerData();
+
 				return false;
 			}
 		};
@@ -93,7 +102,7 @@ public class StationsFragment extends BaseFragment {
 			searchQuery = getArguments().getString("searchQuery");
 			Log.i(CommonUtility.STATIONS_TAG, searchQuery);
 		}
-
+		showProgress = true;
 		loadServerData();
 		((MainActivity) activity).onSectionAttached("Stations");
 
@@ -120,6 +129,7 @@ public class StationsFragment extends BaseFragment {
 	@Override
 	public void onResume() {
 		super.onResume();
+		showProgress = true;
 		loadServerData();
 	}
 
@@ -164,16 +174,34 @@ public class StationsFragment extends BaseFragment {
 
 	private class StationsLoader extends
 			AsyncTask<Void, Integer, ArrayList<StationModel>> {
+		protected ProgressDialog progressDialog;
+
+		protected void onPreExecute() {
+			super.onPreExecute();
+			progressDialog = new ProgressDialog(activity);
+			progressDialog.setTitle("Stations");
+			progressDialog.setMessage(CommonUtility.LOADING_PEASE_WAIT);
+			progressDialog.setCancelable(true);
+			if (showProgress) {
+				progressDialog.show();
+			}
+		};
 
 		@Override
 		protected ArrayList<StationModel> doInBackground(Void... arg0) {
 			stationsModelList = new ArrayList<StationModel>();
-
+			// change to using HttpRequestWrapper
 			HttpClient httpClient = new DefaultHttpClient();
 
-			String API_URL = CommonUtility.HOST_URL
-					+ "test/stations.php?uname=" + getUserName()
-					+ "&n=30&name=" + searchQuery;
+			String API_URL = "";
+			try {
+				API_URL = CommonUtility.HOST_URL + "test/stations.php?uname="
+						+ getUserName() + "&n=30&name="
+						+ URLEncoder.encode(searchQuery, "UTF-8");
+			} catch (UnsupportedEncodingException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 
 			Log.i(CommonUtility.STATIONS_TAG, API_URL);
 
@@ -196,6 +224,8 @@ public class StationsFragment extends BaseFragment {
 
 					JSONObject jobj = generalJobj.getJSONObject(i);
 					model.setUnitId(jobj.getString("unit_id"));
+					model.setCity(jobj.getString("city"));
+					model.setState(jobj.getString("state"));
 					model.setName(jobj.getString("station_name"));
 					model.setCounty(jobj.getString("county"));
 					model.setInstallationDate(jobj
@@ -204,6 +234,7 @@ public class StationsFragment extends BaseFragment {
 							&& jobj.getString("isFavourite").equals("true"));
 					stationsModelList.add(model);
 				}
+
 				Log.i(CommonUtility.STATIONS_TAG,
 						"stations list retrieved, size() = "
 								+ stationsModelList.size());
@@ -215,7 +246,7 @@ public class StationsFragment extends BaseFragment {
 			} catch (Exception ex) {
 				ex.printStackTrace();
 			}
-
+			progressDialog.dismiss();
 			return stationsModelList;
 		}
 
@@ -223,6 +254,7 @@ public class StationsFragment extends BaseFragment {
 		protected void onPostExecute(ArrayList<StationModel> result) {
 			adapter = new StationsAdapter(context, stationsModelList);
 			stationsListView.setAdapter(adapter);
+			progressDialog.dismiss();
 		}
 	}
 }

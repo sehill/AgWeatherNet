@@ -51,5 +51,9 @@
     <string name="unity">unity</string>
     <string name="title_activity_google_play_services_result">GooglePlayServicesResultActivity</string>
     <string name="blank">-</string>
+    <string name="title_activity_station_map">StationMapActivity</string>
+    <string name="location">Location</string>
+    <string name="see_on_map">See on Map</string>
+    <string name="favorite_stations">Favorite Stations</string>
 
 </resources>

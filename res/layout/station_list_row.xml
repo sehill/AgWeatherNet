@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/alertRowData"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" >
@@ -37,9 +38,27 @@
         android:id="@+id/countye"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/name"
+        android:layout_below="@+id/name"
         android:layout_marginLeft="5sp"
-        android:layout_toRightOf="@+id/name"
+        android:layout_toRightOf="@+id/thumbnail"
+        android:textSize="17sp" />
+
+    <TextView
+        android:id="@+id/stationCity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/countye"
+        android:layout_marginLeft="5sp"
+        android:layout_toRightOf="@+id/countye"
+        android:textSize="17sp" />
+
+    <TextView
+        android:id="@+id/stationState"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/stationCity"
+        android:layout_marginLeft="5sp"
+        android:layout_toRightOf="@+id/stationCity"
         android:textSize="17sp" />
 
     <TextView
@@ -49,6 +68,7 @@
         android:layout_below="@+id/name"
         android:layout_marginLeft="20sp"
         android:layout_toRightOf="@+id/thumbnail"
-        android:textSize="13sp" />
+        android:textSize="13sp"
+        android:visibility="invisible" />
 
 </RelativeLayout>

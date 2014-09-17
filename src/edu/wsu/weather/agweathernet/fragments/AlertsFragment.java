@@ -14,6 +14,7 @@ import org.json.JSONObject;
 
 import android.app.Activity;
 import android.app.FragmentTransaction;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
@@ -25,9 +26,8 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import edu.wsu.weather.agweathernet.AlertsAdapter;
 import edu.wsu.weather.agweathernet.AlertsModel;
 import edu.wsu.weather.agweathernet.CommonUtility;
@@ -38,6 +38,8 @@ public class AlertsFragment extends BaseFragment {
 	ListView alertsListView;
 	AlertsAdapter adapter;
 	ArrayList<AlertsModel> alertModelList;
+	RelativeLayout alertRowData;
+	RelativeLayout longClickData;
 
 	public AlertsFragment() {
 	}
@@ -55,12 +57,19 @@ public class AlertsFragment extends BaseFragment {
 			Bundle savedInstanceState) {
 		View rootView = inflater.inflate(R.layout.alerts_listview, container,
 				false);
+		alertRowData = (RelativeLayout) rootView
+				.findViewById(R.id.alertRowData);
+		longClickData = (RelativeLayout) rootView
+				.findViewById(R.id.longClickRemoveView);
 
 		alertsListView = (ListView) rootView.findViewById(R.id.alerts_list);
 
 		loadServerData();
+
 		((MainActivity) activity).onSectionAttached("My Alerts");
+
 		setEventListeners();
+
 		return rootView;
 	}
 
@@ -100,37 +109,44 @@ public class AlertsFragment extends BaseFragment {
 	@Override
 	public void onAttach(Activity activity) {
 		super.onAttach(activity);
-		// ((MainActivity) activity).onSectionAttached("My Alerts");
 	}
 
 	private void setEventListeners() {
-		alertsListView.setOnItemClickListener(new OnItemClickListener() {
-
-			@Override
-			public void onItemClick(AdapterView<?> parent, View view,
-					int position, long id) {
-				AlertsModel selectedModel = (AlertsModel) alertModelList
-						.get(position);
-				Log.i(CommonUtility.ALERTS_ACT_STR, "model = " + selectedModel);
-
-				SingleAlertFragment newFrag = new SingleAlertFragment();
-
-				Bundle args = new Bundle();
-
-				args.putString("id", selectedModel.Id);
-
-				newFrag.setArguments(args);
-
-				FragmentTransaction transaction = getFragmentManager()
-						.beginTransaction();
-
-				transaction.replace(R.id.container, newFrag);
-				transaction.addToBackStack(null);
-
-				transaction.commit();
-			}
-
-		});
+		/*
+		 * alertsListView.setOnItemClickListener(new OnItemClickListener() {
+		 * 
+		 * @Override public void onItemClick(AdapterView<?> parent, View view,
+		 * int position, long id) { AlertsModel selectedModel = (AlertsModel)
+		 * alertModelList .get(position); Log.i(CommonUtility.ALERTS_ACT_STR,
+		 * "model = " + selectedModel);
+		 * 
+		 * SingleAlertFragment newFrag = new SingleAlertFragment();
+		 * 
+		 * Bundle args = new Bundle();
+		 * 
+		 * args.putString("id", selectedModel.Id);
+		 * 
+		 * newFrag.setArguments(args);
+		 * 
+		 * FragmentTransaction transaction = getFragmentManager()
+		 * .beginTransaction();
+		 * 
+		 * transaction.replace(R.id.container, newFrag);
+		 * transaction.addToBackStack(null);
+		 * 
+		 * transaction.commit(); }
+		 * 
+		 * });
+		 * 
+		 * alertsListView.setLongClickable(true);
+		 * alertsListView.setOnLongClickListener(new OnLongClickListener() {
+		 * 
+		 * @Override public boolean onLongClick(View v) {
+		 * Log.i(CommonUtility.ALERTS_ACT_STR, "long click");
+		 * Toast.makeText(context, "WW", Toast.LENGTH_LONG).show();
+		 * alertRowData.setVisibility(View.INVISIBLE);
+		 * longClickData.setVisibility(View.VISIBLE); return true; } });
+		 */
 	}
 
 	private void loadServerData() {
@@ -140,6 +156,16 @@ public class AlertsFragment extends BaseFragment {
 
 	private class AlertsLoader extends
 			AsyncTask<Void, Integer, ArrayList<AlertsModel>> {
+		protected ProgressDialog progressDialog;
+
+		protected void onPreExecute() {
+			super.onPreExecute();
+			progressDialog = new ProgressDialog(activity);
+			progressDialog.setTitle("My Alerts");
+			progressDialog.setMessage(CommonUtility.LOADING_PEASE_WAIT);
+			progressDialog.setCancelable(true);
+			progressDialog.show();
+		};
 
 		@Override
 		protected ArrayList<AlertsModel> doInBackground(Void... arg0) {
@@ -202,7 +228,7 @@ public class AlertsFragment extends BaseFragment {
 			} catch (Exception ex) {
 				ex.printStackTrace();
 			}
-
+			progressDialog.dismiss();
 			return alertModelList;
 		}
 
@@ -210,8 +236,10 @@ public class AlertsFragment extends BaseFragment {
 		protected void onPostExecute(ArrayList<AlertsModel> result) {
 			Log.i("AlertsActivity",
 					"alerts retrieved, size() = " + result.size());
-			adapter = new AlertsAdapter(context, alertModelList);
+			adapter = new AlertsAdapter(context, alertModelList,
+					getFragmentManager());
 			alertsListView.setAdapter(adapter);
+			progressDialog.dismiss();
 		}
 	}
 }

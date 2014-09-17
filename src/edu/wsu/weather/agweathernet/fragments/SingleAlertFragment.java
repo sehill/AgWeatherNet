@@ -93,6 +93,7 @@ public class SingleAlertFragment extends BaseFragment {
 
 		((MainActivity) activity).onSectionAttached("Alert");
 
+		// TODO if arguments not set, show message and redirect back;
 		alertId = getArguments().getString("id");
 
 		if (alertId == null || alertId.isEmpty()) {

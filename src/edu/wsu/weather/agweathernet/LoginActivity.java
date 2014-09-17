@@ -1,5 +1,7 @@
 package edu.wsu.weather.agweathernet;
 
+import static android.widget.Toast.LENGTH_LONG;
+
 import java.io.IOException;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -56,6 +58,8 @@ public class LoginActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_login);
 
+		checkAlertConnection();
+
 		initializeFields();
 
 		setEventListeners();
@@ -77,6 +81,29 @@ public class LoginActivity extends Activity {
 		}
 
 		redirectIfLoggedIn();
+	}
+
+	private boolean checkAlertConnection() {
+		Log.i(CommonUtility.LOGIN_ACT_STR, "Checking connection");
+		boolean hasConnection = CommonUtility.hasConnection(this);
+		boolean hasServerConnection = false;
+		if (!hasConnection) {
+			try {
+				Log.i(CommonUtility.LOGIN_ACT_STR, "No connection");
+				Toast.makeText(
+						this,
+						"No internet connection. Connect to the internet and try again.",
+						LENGTH_LONG).show();
+			} catch (Exception e) {
+				Log.d(CommonUtility.LOGIN_ACT_STR,
+						"Show Dialog: " + e.getMessage());
+			}
+		} else {
+			// TODO check connection to the server.
+			hasServerConnection = true;
+		}
+		return hasConnection && hasServerConnection;
+		// Log.i(CommonUtility.LOGIN_ACT_STR, "End of checking connection");
 	}
 
 	/**
@@ -279,6 +306,7 @@ public class LoginActivity extends Activity {
 				+ userId);
 		if (!userId.equals(defVal)) {
 			openActivity(MainActivity.class);
+			// TODO change home activity
 		} else {
 			Log.i("LoginAcitvity", "user id in prefs is " + userId
 					+ " but still login problem");
@@ -296,10 +324,12 @@ public class LoginActivity extends Activity {
 		loginButton.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				UserLoginTask ult = new UserLoginTask(
-						LoginActivity.this.username.getText().toString(),
-						LoginActivity.this.password.getText().toString());
-				ult.execute();
+				if (checkAlertConnection()) {
+					UserLoginTask ult = new UserLoginTask(
+							LoginActivity.this.username.getText().toString(),
+							LoginActivity.this.password.getText().toString());
+					ult.execute();
+				}
 			}
 		});
 	}

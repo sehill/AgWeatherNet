@@ -1,6 +1,6 @@
 package edu.wsu.weather.agweathernet.fragments;
 
-import static edu.wsu.weather.agweathernet.CommonUtility.HOME_FRAG_TAG;
+import java.util.ArrayList;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -8,11 +8,13 @@ import org.json.JSONObject;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.FragmentTransaction;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.location.Criteria;
+import android.content.pm.ActivityInfo;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -23,13 +25,18 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 import edu.wsu.weather.agweathernet.CommonUtility;
 import edu.wsu.weather.agweathernet.MainActivity;
 import edu.wsu.weather.agweathernet.R;
 import edu.wsu.weather.agweathernet.helpers.HttpRequestWrapper;
 import edu.wsu.weather.agweathernet.helpers.ImageLoader;
+import edu.wsu.weather.agweathernet.helpers.StationModel;
+import edu.wsu.weather.agweathernet.helpers.StationsAdapter;
 
 public class HomeFragment extends BaseFragment implements LocationListener {
 
@@ -45,10 +52,15 @@ public class HomeFragment extends BaseFragment implements LocationListener {
 	TextView txtviewRain;
 	ImageView stationImgView;
 
+	ListView stationsListView;
+	StationsAdapter adapter;
+	ArrayList<StationModel> stationsModelList;
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		activity = getActivity();
+
 		context = activity.getApplicationContext();
 
 		locationManager = (LocationManager) activity
@@ -71,7 +83,41 @@ public class HomeFragment extends BaseFragment implements LocationListener {
 		View rootView = inflater
 				.inflate(R.layout.home_layout, container, false);
 		initializeFields(rootView);
+
+		loadServerData();
+
+		setEventListeners();
+
 		return rootView;
+	}
+
+	private void setEventListeners() {
+		stationsListView.setOnItemClickListener(new OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view,
+					int position, long id) {
+				StationModel selectedModel = (StationModel) stationsModelList
+						.get(position);
+				Log.i(CommonUtility.STATIONS_TAG, "model = " + selectedModel);
+
+				SingleStationFragment newFrag = new SingleStationFragment();
+
+				Bundle args = new Bundle();
+
+				args.putString("id", selectedModel.getUnitId());
+
+				newFrag.setArguments(args);
+
+				FragmentTransaction transaction = getFragmentManager()
+						.beginTransaction();
+
+				transaction.replace(R.id.container, newFrag);
+				transaction.addToBackStack(null);
+
+				transaction.commit();
+			}
+		});
 	}
 
 	@Override
@@ -101,6 +147,17 @@ public class HomeFragment extends BaseFragment implements LocationListener {
 
 	@Override
 	public void onStatusChanged(String provider, int status, Bundle extras) {
+	}
+
+	@Override
+	public void setUserVisibleHint(boolean isVisibleToUser) {
+		super.setUserVisibleHint(isVisibleToUser);
+		if (isVisibleToUser) {
+			if (activity == null)
+				activity = getActivity();
+			Log.i("GENERAL", "orientation set");
+			activity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+		}
 	}
 
 	private void getNearestStation() {
@@ -151,6 +208,8 @@ public class HomeFragment extends BaseFragment implements LocationListener {
 		txtviewDewpoint = (TextView) rootView
 				.findViewById(R.id.txtviewDewpoint);
 		txtviewRain = (TextView) rootView.findViewById(R.id.txtviewRain);
+
+		stationsListView = (ListView) rootView.findViewById(R.id.stations_list);
 	}
 
 	private void setFieldsContent(JSONObject jsonObj) throws JSONException {
@@ -193,18 +252,11 @@ public class HomeFragment extends BaseFragment implements LocationListener {
 	}
 
 	private void setLocation() {
-		Criteria criteria = new Criteria();
-
-		String provider = locationManager.getBestProvider(criteria, false);
-		Log.i(CommonUtility.HOME_FRAG_TAG, provider);
-
-		if (!locationManager.isProviderEnabled(provider)) {
-			showSettingsAlert(provider);
-		}
-		provider = locationManager.getBestProvider(criteria, true);
-		Log.i(HOME_FRAG_TAG, provider);
-		locationManager.requestLocationUpdates(provider, 1000L, 500.0f, this);
-		Location loc = locationManager.getLastKnownLocation(provider);
+		locationManager.requestLocationUpdates(
+				LocationManager.NETWORK_PROVIDER, 1000L, 500.0f, this);
+		Log.i(CommonUtility.HOME_FRAG_TAG, "retrieving location");
+		Location loc = locationManager
+				.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
 		if (loc != null) {
 			onLocationChanged(loc);
 		}
@@ -234,5 +286,76 @@ public class HomeFragment extends BaseFragment implements LocationListener {
 					}
 				});
 		alertDialog.show();
+	}
+
+	private void loadServerData() {
+		Log.i(CommonUtility.STATIONS_TAG, "loadServerData()");
+		new StationsLoader().execute();
+	}
+
+	private class StationsLoader extends
+			AsyncTask<Void, Integer, ArrayList<StationModel>> {
+		protected ProgressDialog progressDialog;
+
+		protected void onPreExecute() {
+			super.onPreExecute();
+			progressDialog = new ProgressDialog(activity);
+			progressDialog.setTitle("Stations");
+			progressDialog.setMessage(CommonUtility.LOADING_PEASE_WAIT);
+			progressDialog.setCancelable(true);
+			progressDialog.show();
+		};
+
+		@Override
+		protected ArrayList<StationModel> doInBackground(Void... arg0) {
+			stationsModelList = new ArrayList<StationModel>();
+
+			String resultString = "Doing in background";
+			try {
+				Log.i(CommonUtility.STATIONS_TAG, "getting stations background");
+				resultString = HttpRequestWrapper
+						.getString(CommonUtility.HOST_URL
+								+ "test/stations.php?n=30&favsts=1&uname="
+								+ getUserName());
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+			try {
+				StationModel model;
+				JSONArray generalJobj = new JSONArray(resultString);
+
+				for (int i = 0; i < generalJobj.length(); i++) {
+					model = new StationModel();
+
+					JSONObject jobj = generalJobj.getJSONObject(i);
+					model.setUnitId(jobj.getString("unit_id"));
+					model.setCity(jobj.getString("city"));
+					model.setState(jobj.getString("state"));
+					model.setName(jobj.getString("station_name"));
+					model.setCounty(jobj.getString("county"));
+					model.setInstallationDate(jobj
+							.getString("installation_date"));
+					model.setFavourite(jobj.getString("isFavourite") != null
+							&& jobj.getString("isFavourite").equals("true"));
+					stationsModelList.add(model);
+				}
+
+				Log.i(CommonUtility.STATIONS_TAG,
+						"stations list retrieved, size() = "
+								+ stationsModelList.size());
+				progressDialog.dismiss();
+			} catch (Exception ex) {
+				ex.printStackTrace();
+			}
+			return stationsModelList;
+		}
+
+		@Override
+		protected void onPostExecute(ArrayList<StationModel> result) {
+			adapter = new StationsAdapter(context, stationsModelList);
+			stationsListView.setAdapter(adapter);
+			progressDialog.dismiss();
+		}
 	}
 }
