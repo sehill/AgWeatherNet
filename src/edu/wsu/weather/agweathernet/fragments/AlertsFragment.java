@@ -3,12 +3,7 @@ package edu.wsu.weather.agweathernet.fragments;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.util.EntityUtils;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -33,6 +28,8 @@ import edu.wsu.weather.agweathernet.AlertsModel;
 import edu.wsu.weather.agweathernet.CommonUtility;
 import edu.wsu.weather.agweathernet.MainActivity;
 import edu.wsu.weather.agweathernet.R;
+import edu.wsu.weather.agweathernet.helpers.AgWeatherNetApp;
+import edu.wsu.weather.agweathernet.helpers.HttpRequestWrapper;
 
 public class AlertsFragment extends BaseFragment {
 	ListView alertsListView;
@@ -170,30 +167,32 @@ public class AlertsFragment extends BaseFragment {
 		@Override
 		protected ArrayList<AlertsModel> doInBackground(Void... arg0) {
 			alertModelList = new ArrayList<AlertsModel>();
-			HttpClient httpClient = new DefaultHttpClient();
 
 			// TODO take shared preferences object out for common use.
 			SharedPreferences prefs = AlertsFragment.this.getActivity()
 					.getSharedPreferences("edu.wsu.weather.agweathernet",
 							Context.MODE_PRIVATE);
 			String username = prefs.getString("username", "");
+			String authToken = prefs.getString("auth_token", "");
 
 			String API_URL = CommonUtility.HOST_URL + "test/alerts.php";
 			API_URL += "?uname=" + username;
+			API_URL += "&auth_token=" + authToken;
 
 			Log.i(CommonUtility.ALERTS_ACT_STR, "API_URL = " + API_URL);
-			HttpGet get = new HttpGet(API_URL);
 
 			String resultString = "Doing in background";
 
 			try {
 				Log.i(CommonUtility.ALERTS_ACT_STR, "getting alerts background");
 
-				HttpResponse resp = httpClient.execute(get);
-
-				resultString = EntityUtils.toString(resp.getEntity());
+				resultString = HttpRequestWrapper.getString(
+						((AgWeatherNetApp) activity.getApplication())
+								.getHttpClient(), ((AgWeatherNetApp) activity
+								.getApplication()).getHttpContext(), API_URL);
 
 				AlertsModel model;
+
 				JSONArray generalJobj = new JSONArray(resultString);
 
 				for (int i = 0; i < generalJobj.length(); i++) {

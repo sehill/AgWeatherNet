@@ -6,7 +6,7 @@ import org.apache.http.HttpResponse;
 import org.apache.http.ParseException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.protocol.HttpContext;
 import org.apache.http.util.EntityUtils;
 
 import android.util.Log;
@@ -17,18 +17,17 @@ public class HttpRequestWrapper {
 	public HttpRequestWrapper() {
 	}
 
-	public static String getString(String url) throws ParseException,
+	public static String getString(HttpClient httpClient,
+			HttpContext localContext, String url) throws ParseException,
 			IOException {
-
-		HttpClient httpClient = new DefaultHttpClient();
-
 		HttpGet get = new HttpGet(url);
 
 		String resultString = "Doing in background";
 
-		Log.i(CommonUtility.HTTP_REQUEST_WRAPPER, "getString() executing...");
+		Log.i(CommonUtility.HTTP_REQUEST_WRAPPER,
+				"getString() executing... url: " + url);
 
-		HttpResponse resp = httpClient.execute(get);
+		HttpResponse resp = httpClient.execute(get, localContext);
 
 		resultString = EntityUtils.toString(resp.getEntity());
 

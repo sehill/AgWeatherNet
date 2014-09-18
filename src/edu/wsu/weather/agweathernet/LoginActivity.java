@@ -8,7 +8,6 @@ import java.util.concurrent.atomic.AtomicInteger;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.EntityUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -34,6 +33,9 @@ import android.widget.Toast;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
+
+import edu.wsu.weather.agweathernet.helpers.AgWeatherNetApp;
+import edu.wsu.weather.agweathernet.helpers.HttpRequestWrapper;
 
 public class LoginActivity extends Activity {
 
@@ -250,7 +252,7 @@ public class LoginActivity extends Activity {
 	 * message using the 'from' address in the message.
 	 */
 	private void sendRegistrationIdToBackend() {
-		Log.e(CommonUtility.LOGIN_ACT_STR, "sendRegistrationIdToBackend()");
+		Log.i(CommonUtility.LOGIN_ACT_STR, "sendRegistrationIdToBackend()");
 
 		final String uname;
 
@@ -259,14 +261,19 @@ public class LoginActivity extends Activity {
 		new AsyncTask<Void, Void, JSONObject>() {
 			@Override
 			protected JSONObject doInBackground(Void... params) {
-				HttpClient httpClient = new DefaultHttpClient();
+				HttpClient httpClient = ((AgWeatherNetApp) getApplication())
+						.getHttpClient();
+
 				String API_URL = CommonUtility.HOST_URL + "test/regid.php";
 				API_URL += "?regid=" + regid;
 				API_URL += "&uname=" + uname;
 				Log.i(CommonUtility.LOGIN_ACT_STR, API_URL);
 				HttpGet get = new HttpGet(API_URL);
+
 				try {
-					HttpResponse resp = httpClient.execute(get);
+					HttpResponse resp = httpClient.execute(get,
+							((AgWeatherNetApp) getApplication())
+									.getHttpContext());
 					String resultString = EntityUtils
 							.toString(resp.getEntity());
 					JSONObject jsonObj = new JSONObject(resultString);
@@ -301,15 +308,16 @@ public class LoginActivity extends Activity {
 	protected void redirectIfLoggedIn() {
 		String defVal = "empty";
 		String userId = prefs.getString("userId", defVal);
-		// showToast(userId);
-		Log.i(CommonUtility.LOGIN_ACT_STR, "User already logged in. UserId = "
-				+ userId);
-		if (!userId.equals(defVal)) {
+		String authToken = prefs.getString("auth_token", defVal);
+
+		if (!userId.equals(defVal) && !authToken.equals(defVal)) {
+			Log.i(CommonUtility.LOGIN_ACT_STR,
+					"User already logged in. UserId = " + userId
+							+ " and auth = " + authToken);
 			openActivity(MainActivity.class);
-			// TODO change home activity
+
 		} else {
-			Log.i("LoginAcitvity", "user id in prefs is " + userId
-					+ " but still login problem");
+			Log.i("LoginAcitvity", "user not logged in");
 		}
 	}
 
@@ -325,6 +333,8 @@ public class LoginActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 				if (checkAlertConnection()) {
+					Log.i(CommonUtility.LOGIN_ACT_STR,
+							"Calling user login task");
 					UserLoginTask ult = new UserLoginTask(
 							LoginActivity.this.username.getText().toString(),
 							LoginActivity.this.password.getText().toString());
@@ -378,15 +388,19 @@ public class LoginActivity extends Activity {
 
 		@Override
 		protected JSONObject doInBackground(Void... params) {
-			HttpClient httpClient = new DefaultHttpClient();
+			Log.i(CommonUtility.LOGIN_ACT_STR, "executing user login task...");
+
 			String API_URL = CommonUtility.HOST_URL + "test/login.php";
+
 			API_URL += "?uname=" + username + "&passwd=" + password;
 
-			HttpGet get = new HttpGet(API_URL);
-			try {
-				HttpResponse resp = httpClient.execute(get);
+			Log.i(CommonUtility.LOGIN_ACT_STR, API_URL);
 
-				String resultString = EntityUtils.toString(resp.getEntity());
+			try {
+				String resultString = HttpRequestWrapper.getString(
+						((AgWeatherNetApp) getApplication()).getHttpClient(),
+						((AgWeatherNetApp) getApplication()).getHttpContext(),
+						API_URL);
 
 				JSONObject jsonObj = new JSONObject(resultString);
 
@@ -401,8 +415,10 @@ public class LoginActivity extends Activity {
 		@Override
 		protected void onPostExecute(JSONObject result) {
 			try {
+				Log.i(CommonUtility.LOGIN_ACT_STR,
+						"onPostExecute - user login task...");
 				String res = result.getString("result");
-
+				Log.i(CommonUtility.LOGIN_ACT_STR, result.toString());
 				if (res == null) {// something went wrong
 					Toast.makeText(getApplicationContext(),
 							"Something went wrong. Try again",
@@ -416,13 +432,20 @@ public class LoginActivity extends Activity {
 							.putString("userId", result.getString("userid"))
 							.apply();
 
+					prefs.edit()
+							.putString("auth_token",
+									result.getString("auth_token")).apply();
+
+					Log.i(CommonUtility.LOGIN_ACT_STR,
+							result.getString("auth_token"));
+
 					prefs.edit().putString("username", username).apply();
 
 					sendRegistrationIdToBackend();
 
 					openActivity(MainActivity.class);
 
-				} else if (res.equals("wu")) { // Wrong User
+				} else if (res.equals("wu")) { // Wrong user account
 					LoginActivity.this.password
 							.setError(getString(R.string.incorrect_login_combination));
 				}

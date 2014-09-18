@@ -1,10 +1,5 @@
 package edu.wsu.weather.agweathernet.fragments;
 
-import org.apache.http.HttpResponse;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.util.EntityUtils;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -25,6 +20,8 @@ import android.widget.TextView;
 import edu.wsu.weather.agweathernet.CommonUtility;
 import edu.wsu.weather.agweathernet.MainActivity;
 import edu.wsu.weather.agweathernet.R;
+import edu.wsu.weather.agweathernet.helpers.AgWeatherNetApp;
+import edu.wsu.weather.agweathernet.helpers.HttpRequestWrapper;
 import edu.wsu.weather.agweathernet.helpers.ImageLoader;
 
 public class SingleStationFragment extends BaseFragment {
@@ -127,13 +124,14 @@ public class SingleStationFragment extends BaseFragment {
 			protected String doInBackground(Void... params) {
 
 				String url = CommonUtility.HOST_URL + "test/stations.php?id="
-						+ stationId + "&uname=" + getUserName();
-				HttpClient webClient = new DefaultHttpClient();
-				HttpGet get = new HttpGet(url);
+						+ stationId + "&uname=" + getUserName()
+						+ "&auth_token=" + getPreferenceValue("auth_token", "");
 				try {
-					HttpResponse response = webClient.execute(get);
-					String respString = EntityUtils.toString(response
-							.getEntity());
+					String respString = HttpRequestWrapper.getString(
+							((AgWeatherNetApp) activity.getApplication())
+									.getHttpClient(),
+							((AgWeatherNetApp) activity.getApplication())
+									.getHttpContext(), url);
 					return respString;
 				} catch (Exception ex) {
 					Log.e(CommonUtility.SINGLE_STATION_TAG, ex.getMessage());

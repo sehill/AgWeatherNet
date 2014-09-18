@@ -42,6 +42,8 @@ import edu.wsu.weather.agweathernet.CommonUtility;
 import edu.wsu.weather.agweathernet.KeyValueSpinner;
 import edu.wsu.weather.agweathernet.MainActivity;
 import edu.wsu.weather.agweathernet.R;
+import edu.wsu.weather.agweathernet.helpers.AgWeatherNetApp;
+import edu.wsu.weather.agweathernet.helpers.HttpRequestWrapper;
 import edu.wsu.weather.agweathernet.helpers.SpinnerModel;
 
 public class SingleAlertFragment extends BaseFragment {
@@ -64,13 +66,14 @@ public class SingleAlertFragment extends BaseFragment {
 	private String alertId;
 
 	SharedPreferences prefs;
+	String unameQstring;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setHasOptionsMenu(true);
-		context = getActivity().getApplicationContext();
 		activity = getActivity();
+		context = activity.getApplicationContext();
 	}
 
 	@Override
@@ -81,13 +84,18 @@ public class SingleAlertFragment extends BaseFragment {
 
 		initializeProperties(rootView);
 
-		setSpinner(stationsSpinner, "test/commonquery.php?qname=stations");
-		setSpinner(alertEventSpinner, "test/commonquery.php?qname=alertevents");
-		setSpinner(unitTypeSpinner, "test/commonquery.php?qname=unittypes");
-		setSpinner(alertMethodSpinner,
-				"test/commonquery.php?qname=alertmethods");
-		setSpinner(deliveryStatusSpinner,
-				"test/commonquery.php?qname=deliverystatuses");
+		unameQstring = "uname=" + prefs.getString("username", "")
+				+ "&auth_token=" + prefs.getString("auth_token", "") + "&";
+		setSpinner(stationsSpinner, "test/commonquery.php?" + unameQstring
+				+ "qname=stations");
+		setSpinner(alertEventSpinner, "test/commonquery.php?" + unameQstring
+				+ "qname=alertevents");
+		setSpinner(unitTypeSpinner, "test/commonquery.php?" + unameQstring
+				+ "qname=unittypes");
+		setSpinner(alertMethodSpinner, "test/commonquery.php?" + unameQstring
+				+ "qname=alertmethods");
+		setSpinner(deliveryStatusSpinner, "test/commonquery.php?"
+				+ unameQstring + "qname=deliverystatuses");
 
 		setEventListeners();
 
@@ -148,12 +156,13 @@ public class SingleAlertFragment extends BaseFragment {
 		new AsyncTask<Void, Void, String>() {
 			@Override
 			protected String doInBackground(Void... params) {
-				HttpClient client = new DefaultHttpClient();
-				HttpGet get = new HttpGet(CommonUtility.HOST_URL + url);
 				try {
-					HttpResponse response = client.execute(get);
-					String respString = EntityUtils.toString(response
-							.getEntity());
+					String respString = HttpRequestWrapper.getString(
+							((AgWeatherNetApp) activity.getApplication())
+									.getHttpClient(),
+							((AgWeatherNetApp) activity.getApplication())
+									.getHttpContext(), CommonUtility.HOST_URL
+									+ url);
 					return respString;
 				} catch (Exception ex) {
 					Log.e(CommonUtility.SINGLE_ALERT_ACT_STR, ex.getMessage());
@@ -238,10 +247,14 @@ public class SingleAlertFragment extends BaseFragment {
 					@SuppressWarnings("unchecked")
 					@Override
 					protected String doInBackground(Void... params) {
-						HttpClient httpClient = new DefaultHttpClient();
+						HttpClient httpClient = ((AgWeatherNetApp) activity
+								.getApplication()).getHttpClient();
 
 						HttpPost post = new HttpPost(CommonUtility.HOST_URL
-								+ "test/savealert.php");
+								+ "test/savealert.php?auth_token="
+								+ getPreferenceValue("auth_token", "")
+								+ "&uname="
+								+ getPreferenceValue("username", ""));
 
 						Log.i("TRR", "post URL is " + CommonUtility.HOST_URL
 								+ "test/savealert.php");
@@ -250,10 +263,6 @@ public class SingleAlertFragment extends BaseFragment {
 
 							if (alertId == null || alertId.isEmpty()) {
 								alertId = "-1";
-
-								String uname = prefs.getString("username", "");
-								nameValues.add(new BasicNameValuePair("uname",
-										uname));
 							}
 							Log.i("TRR", alertId);
 							nameValues
@@ -302,7 +311,9 @@ public class SingleAlertFragment extends BaseFragment {
 
 							Log.i("TRR", "entity set");
 
-							HttpResponse resp = httpClient.execute(post);
+							HttpResponse resp = httpClient
+									.execute(post, ((AgWeatherNetApp) activity
+											.getApplication()).getHttpContext());
 
 							if (resp != null) {
 								Log.i("TRR", "" + resp.toString());
@@ -379,8 +390,10 @@ public class SingleAlertFragment extends BaseFragment {
 			@Override
 			protected String doInBackground(Void... params) {
 
-				String url = CommonUtility.HOST_URL + "test/getalert.php?id="
-						+ alertId;
+				String url = CommonUtility.HOST_URL + "test/getalert.php?"
+						+ unameQstring + "id=" + alertId + "&auth_token="
+						+ getPreferenceValue("auth_token", "");
+				Log.i(CommonUtility.SINGLE_ALERT_ACT_STR, url);
 				HttpClient webClient = new DefaultHttpClient();
 				HttpGet get = new HttpGet(url);
 				try {

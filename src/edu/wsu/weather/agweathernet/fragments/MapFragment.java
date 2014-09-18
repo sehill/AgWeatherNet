@@ -36,6 +36,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import edu.wsu.weather.agweathernet.CommonUtility;
 import edu.wsu.weather.agweathernet.MainActivity;
 import edu.wsu.weather.agweathernet.R;
+import edu.wsu.weather.agweathernet.helpers.AgWeatherNetApp;
 import edu.wsu.weather.agweathernet.helpers.HttpRequestWrapper;
 
 public class MapFragment extends BaseFragment implements OnMarkerClickListener,
@@ -51,9 +52,9 @@ public class MapFragment extends BaseFragment implements OnMarkerClickListener,
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setHasOptionsMenu(true);
 		activity = getActivity();
 		context = activity.getApplicationContext();
+		setHasOptionsMenu(true);
 		((MainActivity) activity).onSectionAttached("Stations");
 	}
 
@@ -191,10 +192,17 @@ public class MapFragment extends BaseFragment implements OnMarkerClickListener,
 			@Override
 			protected String doInBackground(Void... params) {
 				try {
-					String res = HttpRequestWrapper
-							.getString(CommonUtility.HOST_URL
+					String res = HttpRequestWrapper.getString(
+							((AgWeatherNetApp) activity.getApplication())
+									.getHttpClient(),
+							((AgWeatherNetApp) activity.getApplication())
+									.getHttpContext(),
+							CommonUtility.HOST_URL
 									+ "test/stations.php?n=3000&uname="
-									+ "levanlevi");
+									+ getPreferenceValue("username", "")
+									+ "&auth_token="
+									+ getPreferenceValue("auth_token", ""));
+
 					Log.i(CommonUtility.MAP_FRAG_TAG, "got response = " + res);
 					return res;
 				} catch (ParseException e) {

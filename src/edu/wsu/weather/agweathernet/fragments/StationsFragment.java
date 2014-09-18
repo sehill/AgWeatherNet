@@ -5,12 +5,7 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 
-import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.util.EntityUtils;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -35,6 +30,8 @@ import android.widget.SearchView;
 import edu.wsu.weather.agweathernet.CommonUtility;
 import edu.wsu.weather.agweathernet.MainActivity;
 import edu.wsu.weather.agweathernet.R;
+import edu.wsu.weather.agweathernet.helpers.AgWeatherNetApp;
+import edu.wsu.weather.agweathernet.helpers.HttpRequestWrapper;
 import edu.wsu.weather.agweathernet.helpers.StationModel;
 import edu.wsu.weather.agweathernet.helpers.StationsAdapter;
 
@@ -191,12 +188,12 @@ public class StationsFragment extends BaseFragment {
 		protected ArrayList<StationModel> doInBackground(Void... arg0) {
 			stationsModelList = new ArrayList<StationModel>();
 			// change to using HttpRequestWrapper
-			HttpClient httpClient = new DefaultHttpClient();
 
 			String API_URL = "";
 			try {
 				API_URL = CommonUtility.HOST_URL + "test/stations.php?uname="
-						+ getUserName() + "&n=30&name="
+						+ getUserName() + "&n=30&auth_token="
+						+ getPreferenceValue("auth_token", "") + "&name="
 						+ URLEncoder.encode(searchQuery, "UTF-8");
 			} catch (UnsupportedEncodingException e) {
 				// TODO Auto-generated catch block
@@ -205,16 +202,15 @@ public class StationsFragment extends BaseFragment {
 
 			Log.i(CommonUtility.STATIONS_TAG, API_URL);
 
-			HttpGet get = new HttpGet(API_URL);
-
 			String resultString = "Doing in background";
 
 			try {
 				Log.i(CommonUtility.STATIONS_TAG, "getting stations background");
 
-				HttpResponse resp = httpClient.execute(get);
-
-				resultString = EntityUtils.toString(resp.getEntity());
+				resultString = HttpRequestWrapper.getString(
+						((AgWeatherNetApp) activity.getApplication())
+								.getHttpClient(), ((AgWeatherNetApp) activity
+								.getApplication()).getHttpContext(), API_URL);
 
 				StationModel model;
 				JSONArray generalJobj = new JSONArray(resultString);
@@ -252,7 +248,7 @@ public class StationsFragment extends BaseFragment {
 
 		@Override
 		protected void onPostExecute(ArrayList<StationModel> result) {
-			adapter = new StationsAdapter(context, stationsModelList);
+			adapter = new StationsAdapter(activity, context, stationsModelList);
 			stationsListView.setAdapter(adapter);
 			progressDialog.dismiss();
 		}

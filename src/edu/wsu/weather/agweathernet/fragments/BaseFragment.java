@@ -10,13 +10,17 @@ public class BaseFragment extends Fragment {
 	Activity activity;
 	private SharedPreferences prefs;
 
-	public SharedPreferences getPrefs() {
+	public SharedPreferences getPrefs() throws Exception {
 		setPrefs();
 		return prefs;
 	}
 
 	public void setPrefs() {
 		if (prefs == null) {
+			// TODO do something if activity is null
+			if (activity == null) {
+				activity = getActivity();
+			}
 			prefs = activity.getSharedPreferences(
 					"edu.wsu.weather.agweathernet", Context.MODE_PRIVATE);
 		}
@@ -28,5 +32,13 @@ public class BaseFragment extends Fragment {
 		}
 
 		return prefs.getString("username", "");
+	}
+
+	public String getPreferenceValue(String key, String alt) {
+		if (prefs == null) {
+			setPrefs();
+		}
+
+		return prefs.getString(key, alt);
 	}
 }

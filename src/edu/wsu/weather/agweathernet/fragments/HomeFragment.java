@@ -33,6 +33,7 @@ import android.widget.TextView;
 import edu.wsu.weather.agweathernet.CommonUtility;
 import edu.wsu.weather.agweathernet.MainActivity;
 import edu.wsu.weather.agweathernet.R;
+import edu.wsu.weather.agweathernet.helpers.AgWeatherNetApp;
 import edu.wsu.weather.agweathernet.helpers.HttpRequestWrapper;
 import edu.wsu.weather.agweathernet.helpers.ImageLoader;
 import edu.wsu.weather.agweathernet.helpers.StationModel;
@@ -80,8 +81,10 @@ public class HomeFragment extends BaseFragment implements LocationListener {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
+
 		View rootView = inflater
 				.inflate(R.layout.home_layout, container, false);
+
 		initializeFields(rootView);
 
 		loadServerData();
@@ -129,7 +132,6 @@ public class HomeFragment extends BaseFragment implements LocationListener {
 	@Override
 	public void onLocationChanged(Location loc) {
 		location = loc;
-		// TODO get data from server with gps.
 		getNearestStation();
 		Log.i(CommonUtility.HOME_FRAG_TAG, "location-" + loc.getLatitude()
 				+ " " + loc.getLongitude());
@@ -149,6 +151,7 @@ public class HomeFragment extends BaseFragment implements LocationListener {
 	public void onStatusChanged(String provider, int status, Bundle extras) {
 	}
 
+	// TODO we need this?
 	@Override
 	public void setUserVisibleHint(boolean isVisibleToUser) {
 		super.setUserVisibleHint(isVisibleToUser);
@@ -169,12 +172,19 @@ public class HomeFragment extends BaseFragment implements LocationListener {
 				SharedPreferences prefs = activity.getSharedPreferences(
 						"edu.wsu.weather.agweathernet", Context.MODE_PRIVATE);
 				String username = prefs.getString("username", "");
+				String authToken = prefs.getString("auth_token", "");
+
 				String url = CommonUtility.HOST_URL + "test/stations.php?lat="
 						+ location.getLatitude() + "&long="
-						+ location.getLongitude() + "&uname=" + username;
+						+ location.getLongitude() + "&uname=" + username
+						+ "&auth_token=" + authToken;
 
 				try {
-					return HttpRequestWrapper.getString(url);
+					return HttpRequestWrapper.getString(
+							((AgWeatherNetApp) activity.getApplication())
+									.getHttpClient(),
+							((AgWeatherNetApp) activity.getApplication())
+									.getHttpContext(), url);
 				} catch (Exception ex) {
 					Log.e(CommonUtility.HOME_FRAG_TAG, ex.getMessage());
 				}
@@ -191,7 +201,6 @@ public class HomeFragment extends BaseFragment implements LocationListener {
 					setFieldsContent(jsonObj);
 
 				} catch (JSONException e) {
-					e.printStackTrace();
 					Log.e(CommonUtility.HOME_FRAG_TAG, e.getMessage());
 				}
 			}
@@ -312,17 +321,28 @@ public class HomeFragment extends BaseFragment implements LocationListener {
 
 			String resultString = "Doing in background";
 			try {
+
 				Log.i(CommonUtility.STATIONS_TAG, "getting stations background");
-				resultString = HttpRequestWrapper
-						.getString(CommonUtility.HOST_URL
-								+ "test/stations.php?n=30&favsts=1&uname="
-								+ getUserName());
+
+				String url = CommonUtility.HOST_URL
+						+ "test/stations.php?n=30&favsts=1&uname="
+						+ getPreferenceValue("username", "") + "&auth_token="
+						+ getPreferenceValue("auth_token", "");
+
+				Log.i(CommonUtility.HOME_FRAG_TAG, url);
+
+				resultString = HttpRequestWrapper.getString(
+						((AgWeatherNetApp) activity.getApplication())
+								.getHttpClient(), ((AgWeatherNetApp) activity
+								.getApplication()).getHttpContext(), url);
+
 			} catch (Exception e) {
-				e.printStackTrace();
+				Log.e(CommonUtility.HOME_FRAG_TAG, e.getMessage());
 			}
 
 			try {
 				StationModel model;
+				// TODO check if successful result (JSON)
 				JSONArray generalJobj = new JSONArray(resultString);
 
 				for (int i = 0; i < generalJobj.length(); i++) {
@@ -346,14 +366,14 @@ public class HomeFragment extends BaseFragment implements LocationListener {
 								+ stationsModelList.size());
 				progressDialog.dismiss();
 			} catch (Exception ex) {
-				ex.printStackTrace();
+				Log.e(CommonUtility.HOME_FRAG_TAG, ex.getMessage());
 			}
 			return stationsModelList;
 		}
 
 		@Override
 		protected void onPostExecute(ArrayList<StationModel> result) {
-			adapter = new StationsAdapter(context, stationsModelList);
+			adapter = new StationsAdapter(activity, context, stationsModelList);
 			stationsListView.setAdapter(adapter);
 			progressDialog.dismiss();
 		}

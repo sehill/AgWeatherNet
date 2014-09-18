@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 import org.apache.http.ParseException;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
@@ -20,10 +21,13 @@ import edu.wsu.weather.agweathernet.R;
 
 public class StationsAdapter extends BaseAdapter {
 	Context ctx;
+	Activity activity;
 	ArrayList<StationModel> stationList;
 	public ImageLoader imageLoader;
 
-	public StationsAdapter(Context ctx, ArrayList<StationModel> stationList) {
+	public StationsAdapter(Activity activity, Context ctx,
+			ArrayList<StationModel> stationList) {
+		this.activity = activity;
 		this.ctx = ctx;
 		this.stationList = stationList;
 		imageLoader = new ImageLoader(ctx);
@@ -114,22 +118,29 @@ public class StationsAdapter extends BaseAdapter {
 				SharedPreferences prefs = ctx.getSharedPreferences(
 						"edu.wsu.weather.agweathernet", Context.MODE_PRIVATE);
 				String username = prefs.getString("username", "");
+				String authToken = prefs.getString("auth_token", "");
 				if (stationModel.isFavourite()) {
 					favImage = R.drawable.star_disabled;
 					url = "test/commonmanager.php?qname=rem_fav&uname="
 							+ username + "&stationId="
-							+ stationModel.getUnitId();
+							+ stationModel.getUnitId() + "&auth_token="
+							+ authToken;
 				} else {
 					favImage = R.drawable.star;
 					url = "test/commonmanager.php?qname=add_fav&uname="
 							+ username + "&stationId="
-							+ stationModel.getUnitId();
+							+ stationModel.getUnitId() + "&auth_token="
+							+ authToken;
 				}
 				new AsyncTask<Void, Void, String>() {
 					protected String doInBackground(Void... arg0) {
 						try {
-							String response = HttpRequestWrapper
-									.getString(CommonUtility.HOST_URL + url);
+							String response = HttpRequestWrapper.getString(
+									((AgWeatherNetApp) activity
+											.getApplication()).getHttpClient(),
+									((AgWeatherNetApp) activity
+											.getApplication()).getHttpContext(),
+									CommonUtility.HOST_URL + url);
 							return response;
 						} catch (ParseException e) {
 							e.printStackTrace();
