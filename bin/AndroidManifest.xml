@@ -7,6 +7,7 @@
     <uses-sdk
         android:minSdkVersion="16"
         android:targetSdkVersion="21" />
+    <!-- minSdkVersion10 for 2.3.6 -->
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
@@ -29,7 +30,7 @@
     <application
         android:name="edu.wsu.weather.agweathernet.helpers.AgWeatherNetApp"
         android:allowBackup="true"
-        android:icon="@drawable/wsu"
+        android:icon="@drawable/awnlogo"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <meta-data

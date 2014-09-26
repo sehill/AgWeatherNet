@@ -1,11 +1,19 @@
 package edu.wsu.weather.agweathernet.fragments;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.FragmentTransaction;
+import android.app.ProgressDialog;
+import android.content.DialogInterface;
+import android.content.DialogInterface.OnCancelListener;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -120,6 +128,26 @@ public class SingleStationFragment extends BaseFragment {
 	private void getStationById() {
 
 		new AsyncTask<Void, Void, String>() {
+
+			protected ProgressDialog progressDialog;
+
+			protected void onPreExecute() {
+				super.onPreExecute();
+				progressDialog = new ProgressDialog(activity);
+				progressDialog.setTitle("Stations");
+				progressDialog.setMessage(CommonUtility.LOADING_PEASE_WAIT);
+				progressDialog.setCancelable(true);
+				progressDialog.setOnCancelListener(new OnCancelListener() {
+					@Override
+					public void onCancel(DialogInterface dialog) {
+						HttpRequestWrapper.abortRequest();
+						cancel(true);
+					}
+				});
+				progressDialog.show();
+
+			};
+
 			@Override
 			protected String doInBackground(Void... params) {
 
@@ -147,30 +175,66 @@ public class SingleStationFragment extends BaseFragment {
 					JSONObject jsonObj = jsonArr.getJSONObject(0);
 					Log.i(CommonUtility.SINGLE_STATION_TAG, jsonObj.toString());
 					setFieldsContent(jsonObj);
-
 				} catch (JSONException e) {
 					e.printStackTrace();
 					Log.e(CommonUtility.SINGLE_STATION_TAG, e.getMessage());
 				}
+				progressDialog.dismiss();
 			}
 		}.execute();
 	}
 
+	@SuppressLint("SimpleDateFormat")
 	private void setFieldsContent(JSONObject model) throws JSONException {
-		stationName.setText(model.getString("station_name"));
-		county.setText(model.getString("county"));
-		installDate.setText(model.getString("installation_date"));
-		airTemp.setText(model.getString("air_temp"));
-		inTime.setText(model.getString("intime"));
-		relHumidity.setText(model.getString("rel_humidity"));
-		dewPoint.setText(model.getString("dewpoint"));
-		leafWetness.setText(model.getString("leaf_wetness"));
-		solarRad.setText(model.getString("solar_rad"));
-		wind.setText(model.getString("wind_speed"));
-		soilTemp.setText(model.getString("soil_temp_8_in"));
-		precip.setText(model.getString("precip"));
-		lat = model.getString("station_latdeg");
-		lng = model.getString("station_lngdeg");
+		try {
+			stationName.setText(model.getString("station_name"));
+
+			county.setText(model.getString("county"));
+
+			SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+
+			Date dateStr = formatter
+					.parse(model.getString("installation_date"));
+
+			installDate.setText(new SimpleDateFormat("MMM dd, yyyy").format(
+					dateStr).toString());
+
+			airTemp.setText(CommonUtility.DECIMAL_FORMAT_SINGLE.format(Double
+					.parseDouble(model.getString("air_temp"))));
+
+			inTime.setText(model.getString("intime"));
+
+			relHumidity
+					.setText(CommonUtility.DECIMAL_FORMAT_SINGLE.format(Double
+							.parseDouble(model.getString("rel_humidity"))));
+
+			dewPoint.setText(CommonUtility.DECIMAL_FORMAT_SINGLE.format(Double
+					.parseDouble(model.getString("dewpoint"))));
+
+			leafWetness.setText(CommonUtility.DEF_DECIMAL_FORMAT.format(Double
+					.parseDouble(model.getString("leaf_wetness"))));
+
+			solarRad.setText(CommonUtility.DECIMAL_FORMAT_NONE.format(Double
+					.parseDouble(model.getString("solar_rad"))));
+
+			wind.setText(CommonUtility.DECIMAL_FORMAT_SINGLE.format(Double
+					.parseDouble(model.getString("wind_speed"))));
+
+			soilTemp.setText(CommonUtility.DECIMAL_FORMAT_SINGLE.format(Double
+					.parseDouble(model.getString("soil_temp_8_in"))));
+
+			precip.setText(CommonUtility.DEF_DECIMAL_FORMAT.format(Double
+					.parseDouble(model.getString("precip"))));
+
+			lat = model.getString("station_latdeg");
+
+			lng = model.getString("station_lngdeg");
+
+		} catch (ParseException e) {
+			Log.e(CommonUtility.SINGLE_STATION_TAG, e.getMessage());
+		} catch (Exception e) {
+			Log.e(CommonUtility.SINGLE_STATION_TAG, e.getMessage());
+		}
 	}
 
 	private void initializeProperties(View rootView) {

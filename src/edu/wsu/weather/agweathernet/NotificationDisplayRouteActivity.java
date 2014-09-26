@@ -32,6 +32,8 @@ public class NotificationDisplayRouteActivity extends Activity {
 		initializeContent(model);
 
 		setClickListeners();
+
+		setTitle("Notification");
 	}
 
 	@Override

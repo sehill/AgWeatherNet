@@ -22,10 +22,15 @@ public class CommonUtility {
 	public static final String NAVIGATION_DRAWER_FRAG_TAG = "NavigationDrawerFragment";
 	public static final String HOME_FRAG_TAG = "HomeFragment";
 	public static final DecimalFormat DEF_DECIMAL_FORMAT = new DecimalFormat(
-			"#.##");
+			"0.00");
+	public static final DecimalFormat DECIMAL_FORMAT_SINGLE = new DecimalFormat(
+			"0.0");
+	public static final DecimalFormat DECIMAL_FORMAT_NONE = new DecimalFormat(
+			"0");
 	public static final String MAP_FRAG_TAG = "MapFragment";
 	public static final String LOADING_PEASE_WAIT = "Loading... Please Wait";
 	public static final int MULTIPLY_LAT_LNG_BY = -1;
+	public static final String NEWS_TAG = "AWNewsFragment";
 
 	/**
 	 * Checks if the device has Internet connection.

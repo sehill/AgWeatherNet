@@ -13,6 +13,7 @@ import android.util.Log;
 import edu.wsu.weather.agweathernet.CommonUtility;
 
 public class HttpRequestWrapper {
+	private static HttpGet get;
 
 	public HttpRequestWrapper() {
 	}
@@ -20,7 +21,7 @@ public class HttpRequestWrapper {
 	public static String getString(HttpClient httpClient,
 			HttpContext localContext, String url) throws ParseException,
 			IOException {
-		HttpGet get = new HttpGet(url);
+		get = new HttpGet(url);
 
 		String resultString = "Doing in background";
 
@@ -28,10 +29,15 @@ public class HttpRequestWrapper {
 				"getString() executing... url: " + url);
 
 		HttpResponse resp = httpClient.execute(get, localContext);
-
+		Log.i(CommonUtility.HTTP_REQUEST_WRAPPER, "HttpResponse received");
 		resultString = EntityUtils.toString(resp.getEntity());
 
 		return resultString;
 	}
 
+	public static void abortRequest() {
+		if (get != null) {
+			get.abort();
+		}
+	}
 }

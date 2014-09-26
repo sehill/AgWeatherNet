@@ -18,8 +18,11 @@ import org.json.JSONObject;
 
 import android.app.Activity;
 import android.app.FragmentTransaction;
+import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
+import android.content.DialogInterface.OnCancelListener;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -387,6 +390,25 @@ public class SingleAlertFragment extends BaseFragment {
 	private void getAlertById() {
 
 		new AsyncTask<Void, Void, String>() {
+			protected ProgressDialog progressDialog;
+
+			protected void onPreExecute() {
+				super.onPreExecute();
+				progressDialog = new ProgressDialog(activity);
+				progressDialog.setTitle("Stations");
+				progressDialog.setMessage(CommonUtility.LOADING_PEASE_WAIT);
+				progressDialog.setCancelable(true);
+				progressDialog.setOnCancelListener(new OnCancelListener() {
+					@Override
+					public void onCancel(DialogInterface dialog) {
+						HttpRequestWrapper.abortRequest();
+						Log.i(CommonUtility.STATIONS_TAG, "HTTP GET Cancelled");
+					}
+				});
+
+				progressDialog.show();
+			};
+
 			@Override
 			protected String doInBackground(Void... params) {
 
@@ -434,6 +456,7 @@ public class SingleAlertFragment extends BaseFragment {
 				} catch (JSONException e) {
 					Log.e(CommonUtility.SINGLE_ALERT_ACT_STR, e.getMessage());
 				}
+				progressDialog.dismiss();
 			}
 		}.execute();
 

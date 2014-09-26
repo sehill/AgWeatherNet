@@ -12,6 +12,7 @@ import android.app.FragmentTransaction;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.DialogInterface.OnCancelListener;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
@@ -73,8 +74,8 @@ public class HomeFragment extends BaseFragment implements LocationListener {
 	@Override
 	public void onResume() {
 		super.onResume();
-		Log.i("HOME", "resumed");
-
+		Log.i(CommonUtility.HOME_FRAG_TAG, "resumed");
+		loadServerData();
 		setLocation();
 	}
 
@@ -86,8 +87,6 @@ public class HomeFragment extends BaseFragment implements LocationListener {
 				.inflate(R.layout.home_layout, container, false);
 
 		initializeFields(rootView);
-
-		loadServerData();
 
 		setEventListeners();
 
@@ -311,7 +310,16 @@ public class HomeFragment extends BaseFragment implements LocationListener {
 			progressDialog = new ProgressDialog(activity);
 			progressDialog.setTitle("Stations");
 			progressDialog.setMessage(CommonUtility.LOADING_PEASE_WAIT);
+			
 			progressDialog.setCancelable(true);
+			
+			progressDialog.setOnCancelListener(new OnCancelListener() {
+				@Override
+				public void onCancel(DialogInterface dialog) {
+					HttpRequestWrapper.abortRequest();
+					cancel(true);
+				}
+			});
 			progressDialog.show();
 		};
 
@@ -364,7 +372,6 @@ public class HomeFragment extends BaseFragment implements LocationListener {
 				Log.i(CommonUtility.STATIONS_TAG,
 						"stations list retrieved, size() = "
 								+ stationsModelList.size());
-				progressDialog.dismiss();
 			} catch (Exception ex) {
 				Log.e(CommonUtility.HOME_FRAG_TAG, ex.getMessage());
 			}

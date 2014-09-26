@@ -3,7 +3,10 @@
     android:id="@+id/singleAlertLayout"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical" >
+    android:orientation="vertical"
+    android:paddingLeft="3dp"
+    android:paddingRight="3dp"
+    android:paddingTop="10dp" >
 
     <EditText
         android:id="@+id/editName"
@@ -56,7 +59,8 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/unitTypeList"
         android:layout_centerHorizontal="true"
-        android:paddingLeft="8sp" />
+        android:paddingLeft="8sp"
+        android:visibility="invisible" />
 
     <EditText
         android:id="@+id/editAddress"
@@ -66,7 +70,8 @@
         android:enabled="false"
         android:hint="@string/address"
         android:textColor="@color/textview_default"
-        android:textSize="16sp" />
+        android:textSize="16sp"
+        android:visibility="invisible" />
 
     <Spinner
         android:id="@+id/deliveryStatusList"
@@ -74,7 +79,8 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/editAddress"
         android:layout_centerHorizontal="true"
-        android:paddingLeft="8sp" />
+        android:paddingLeft="8sp"
+        android:visibility="invisible" />
 
     <EditText
         android:id="@+id/editServiceProvider"
@@ -84,7 +90,8 @@
         android:enabled="false"
         android:hint="@string/service_provider"
         android:textColor="@color/textview_default"
-        android:textSize="16sp" />
+        android:textSize="16sp"
+        android:visibility="invisible" />
 
     <EditText
         android:id="@+id/editStartTime"
@@ -102,7 +109,7 @@
         android:layout_width="150sp"
         android:layout_height="40sp"
         android:layout_alignParentRight="true"
-        android:layout_below="@+id/editStartTime"
+        android:layout_below="@+id/unitTypeList"
         android:layout_marginRight="2sp"
         android:background="@drawable/buttonshape"
         android:text="@string/save"

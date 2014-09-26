@@ -55,5 +55,8 @@
     <string name="location">Location</string>
     <string name="see_on_map">See on Map</string>
     <string name="favorite_stations">Favorite Stations</string>
+    <string name="navStationsMap">Map of Stations</string>
+    <string name="navAWNews">AWN News</string>
+    <string name="navOutlooks">Outlooks</string>
 
 </resources>

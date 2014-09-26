@@ -13,6 +13,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import edu.wsu.weather.agweathernet.fragments.AWNewsFragment;
 import edu.wsu.weather.agweathernet.fragments.AlertsFragment;
 import edu.wsu.weather.agweathernet.fragments.HomeFragment;
 import edu.wsu.weather.agweathernet.fragments.MapFragment;
@@ -98,6 +99,20 @@ public class MainActivity extends Activity implements
 			break;
 		case 3:
 			newFrag = new MapFragment();
+			break;
+		case 4:
+			newFrag = new AWNewsFragment();
+			if (extras == null) {
+				extras = new HashMap<String, String>();
+			}
+			extras.put("entry_type", "News");
+			break;
+		case 5:
+			newFrag = new AWNewsFragment();
+			if (extras == null) {
+				extras = new HashMap<String, String>();
+			}
+			extras.put("entry_type", "Outlooks");
 			break;
 		default:
 			newFrag = new HomeFragment();

@@ -11,6 +11,8 @@ import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.DialogInterface.OnCancelListener;
 import android.content.pm.ActivityInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -101,9 +103,6 @@ public class MapFragment extends BaseFragment implements OnMarkerClickListener,
 			stationLocLng = bundleArgs.getString("lng");
 		}
 
-		Log.i(CommonUtility.MAP_FRAG_TAG, "call loadMarkers(...)");
-		loadMarkers();
-		Log.i(CommonUtility.MAP_FRAG_TAG, "end call loadMarkers(...)");
 		return rootView;
 	}
 
@@ -120,9 +119,15 @@ public class MapFragment extends BaseFragment implements OnMarkerClickListener,
 
 	@Override
 	public void onResume() {
+		Log.i(CommonUtility.MAP_FRAG_TAG, "call loadMarkers(...)");
 		loadMarkers();
+		Log.i(CommonUtility.MAP_FRAG_TAG, "end call loadMarkers(...)");
 		super.onResume();
 	}
+
+	/*
+	 * @Override public void onStop() { super.onStop(); }
+	 */
 
 	@Override
 	public void onInfoWindowClick(Marker marker) {
@@ -186,6 +191,13 @@ public class MapFragment extends BaseFragment implements OnMarkerClickListener,
 				progressDialog.setTitle("Stations");
 				progressDialog.setMessage(CommonUtility.LOADING_PEASE_WAIT);
 				progressDialog.setCancelable(true);
+				progressDialog.setOnCancelListener(new OnCancelListener() {
+					@Override
+					public void onCancel(DialogInterface dialog) {
+						HttpRequestWrapper.abortRequest();
+						cancel(true);
+					}
+				});
 				progressDialog.show();
 			};
 
@@ -210,7 +222,6 @@ public class MapFragment extends BaseFragment implements OnMarkerClickListener,
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
-				progressDialog.dismiss();
 				return "";
 			}
 

@@ -17,7 +17,6 @@ public class BaseFragment extends Fragment {
 
 	public void setPrefs() {
 		if (prefs == null) {
-			// TODO do something if activity is null
 			if (activity == null) {
 				activity = getActivity();
 			}

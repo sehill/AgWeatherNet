@@ -35,21 +35,21 @@
         android:src="@drawable/star_disabled" />
 
     <TextView
-        android:id="@+id/countye"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/name"
-        android:layout_marginLeft="5sp"
-        android:layout_toRightOf="@+id/thumbnail"
-        android:textSize="17sp" />
-
-    <TextView
         android:id="@+id/stationCity"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBaseline="@+id/countye"
         android:layout_marginLeft="5sp"
         android:layout_toRightOf="@+id/countye"
+        android:textSize="17sp" />
+
+    <TextView
+        android:id="@+id/countye"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/name"
+        android:layout_marginLeft="5sp"
+        android:layout_toRightOf="@+id/thumbnail"
         android:textSize="17sp" />
 
     <TextView

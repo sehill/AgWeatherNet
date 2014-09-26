@@ -11,7 +11,9 @@ import android.app.Activity;
 import android.app.FragmentTransaction;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
+import android.content.DialogInterface.OnCancelListener;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -161,6 +163,14 @@ public class AlertsFragment extends BaseFragment {
 			progressDialog.setTitle("My Alerts");
 			progressDialog.setMessage(CommonUtility.LOADING_PEASE_WAIT);
 			progressDialog.setCancelable(true);
+
+			progressDialog.setOnCancelListener(new OnCancelListener() {
+				@Override
+				public void onCancel(DialogInterface dialog) {
+					HttpRequestWrapper.abortRequest();
+					cancel(true);
+				}
+			});
 			progressDialog.show();
 		};
 
@@ -227,7 +237,6 @@ public class AlertsFragment extends BaseFragment {
 			} catch (Exception ex) {
 				ex.printStackTrace();
 			}
-			progressDialog.dismiss();
 			return alertModelList;
 		}
 

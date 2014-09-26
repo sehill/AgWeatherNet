@@ -14,6 +14,8 @@ import android.app.FragmentTransaction;
 import android.app.ProgressDialog;
 import android.app.SearchManager;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.DialogInterface.OnCancelListener;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -100,7 +102,7 @@ public class StationsFragment extends BaseFragment {
 			Log.i(CommonUtility.STATIONS_TAG, searchQuery);
 		}
 		showProgress = true;
-		loadServerData();
+
 		((MainActivity) activity).onSectionAttached("Stations");
 
 		setEventListeners();
@@ -179,6 +181,14 @@ public class StationsFragment extends BaseFragment {
 			progressDialog.setTitle("Stations");
 			progressDialog.setMessage(CommonUtility.LOADING_PEASE_WAIT);
 			progressDialog.setCancelable(true);
+			progressDialog.setOnCancelListener(new OnCancelListener() {
+				@Override
+				public void onCancel(DialogInterface dialog) {
+					HttpRequestWrapper.abortRequest();
+					Log.i(CommonUtility.STATIONS_TAG, "HTTP GET Cancelled");
+				}
+			});
+
 			if (showProgress) {
 				progressDialog.show();
 			}
@@ -187,7 +197,6 @@ public class StationsFragment extends BaseFragment {
 		@Override
 		protected ArrayList<StationModel> doInBackground(Void... arg0) {
 			stationsModelList = new ArrayList<StationModel>();
-			// change to using HttpRequestWrapper
 
 			String API_URL = "";
 			try {
@@ -196,7 +205,6 @@ public class StationsFragment extends BaseFragment {
 						+ getPreferenceValue("auth_token", "") + "&name="
 						+ URLEncoder.encode(searchQuery, "UTF-8");
 			} catch (UnsupportedEncodingException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 
@@ -242,7 +250,6 @@ public class StationsFragment extends BaseFragment {
 			} catch (Exception ex) {
 				ex.printStackTrace();
 			}
-			progressDialog.dismiss();
 			return stationsModelList;
 		}
 
