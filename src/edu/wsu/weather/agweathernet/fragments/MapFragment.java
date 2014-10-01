@@ -7,8 +7,8 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import android.app.Activity;
-import android.app.Fragment;
-import android.app.FragmentTransaction;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -90,8 +90,8 @@ public class MapFragment extends BaseFragment implements OnMarkerClickListener,
 			Log.i(CommonUtility.MAP_FRAG_TAG, e.getMessage());
 		}
 
-		map = ((com.google.android.gms.maps.MapFragment) (getFragmentManager()
-				.findFragmentById(R.id.location_map))).getMap();
+		map = ((com.google.android.gms.maps.SupportMapFragment) getFragmentManager()
+				.findFragmentById(R.id.location_map)).getMap();
 		map.setMyLocationEnabled(true);
 		map.setOnInfoWindowClickListener(this);
 
@@ -111,7 +111,7 @@ public class MapFragment extends BaseFragment implements OnMarkerClickListener,
 		super.onDestroyView();
 		Fragment fragment = (getFragmentManager()
 				.findFragmentById(R.id.location_map));
-		FragmentTransaction ft = getActivity().getFragmentManager()
+		FragmentTransaction ft = getActivity().getSupportFragmentManager()
 				.beginTransaction();
 		ft.remove(fragment);
 		ft.commit();

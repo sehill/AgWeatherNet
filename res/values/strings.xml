@@ -58,5 +58,7 @@
     <string name="navStationsMap">Map of Stations</string>
     <string name="navAWNews">AWN News</string>
     <string name="navOutlooks">Outlooks</string>
+    <string name="log_in_to_your_weather_wsu_edu_account_a_nd_have_limited_access_by_your_smartphone_you_will_receive_some_useful_notifications_from_agweathernet_team_">Log in to your weather.wsu.edu account a\n        nd have limited access by your smartphone. You will\n         receive some useful notifications from AgWeatherNet team!</string>
+    <string name="log_in_tip">Log in to your weather.wsu.edu account a\n        nd have limited access by your smartphone. You will\n         receive some useful notifications from AgWeatherNet team!</string>
 
 </resources>

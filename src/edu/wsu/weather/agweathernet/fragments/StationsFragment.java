@@ -10,7 +10,6 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import android.app.Activity;
-import android.app.FragmentTransaction;
 import android.app.ProgressDialog;
 import android.app.SearchManager;
 import android.content.Context;
@@ -18,17 +17,20 @@ import android.content.DialogInterface;
 import android.content.DialogInterface.OnCancelListener;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v4.view.MenuItemCompat;
+import android.support.v7.widget.SearchView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
-import android.widget.SearchView;
 import edu.wsu.weather.agweathernet.CommonUtility;
 import edu.wsu.weather.agweathernet.MainActivity;
 import edu.wsu.weather.agweathernet.R;
@@ -53,10 +55,13 @@ public class StationsFragment extends BaseFragment {
 	public void onCreate(Bundle savedInstanceState) {
 		Log.i(CommonUtility.STATIONS_TAG, "onCreate");
 		super.onCreate(savedInstanceState);
+
 		setHasOptionsMenu(true);
+
 		activity = getActivity();
 		context = activity.getApplicationContext();
 
+		// if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
 		queryTextListener = new SearchView.OnQueryTextListener() {
 
 			@Override
@@ -85,6 +90,7 @@ public class StationsFragment extends BaseFragment {
 				return false;
 			}
 		};
+		// }
 
 	}
 
@@ -115,14 +121,17 @@ public class StationsFragment extends BaseFragment {
 		super.onCreateOptionsMenu(menu, inflater);
 		inflater.inflate(R.menu.stations, menu);
 
+		// if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
 		SearchManager searchManager = (SearchManager) activity
 				.getSystemService(Context.SEARCH_SERVICE);
-		SearchView searchView = (SearchView) menu.findItem(R.id.search)
-				.getActionView();
+		MenuItem searchItem = menu.findItem(R.id.search);
+		SearchView searchView = (SearchView) MenuItemCompat
+				.getActionView(searchItem);
 		searchView.setSearchableInfo(searchManager.getSearchableInfo(activity
 				.getComponentName()));
 		this.searchView = searchView;
 		searchView.setOnQueryTextListener(queryTextListener);
+		// }
 	}
 
 	@Override

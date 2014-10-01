@@ -1,9 +1,9 @@
 package edu.wsu.weather.agweathernet.fragments;
 
 import android.app.Activity;
-import android.app.Fragment;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.support.v4.app.Fragment;
 
 public class BaseFragment extends Fragment {
 	Context context;

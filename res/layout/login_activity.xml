@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <TextView
+        android:id="@+id/loginTip"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="15dip"
+        android:text="Log in to your weather.wsu.edu account a
+        nd have limited access by your smartphone. You will
+         receive some useful notifications from AgWeatherNet team!" />
+
+    <EditText
+        android:id="@+id/username"
+        android:layout_width="fill_parent"
+        android:layout_height="39dip"
+        android:layout_above="@+id/epassword"
+        android:layout_centerHorizontal="true"
+        android:hint="@string/enter_email"
+        android:text="" />
+
+    <EditText
+        android:id="@+id/epassword"
+        android:layout_width="fill_parent"
+        android:layout_height="39dip"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:hint="@string/enter_password"
+        android:inputType="textPassword"
+        android:text="" />
+
+    <Button
+        android:id="@+id/loginButton"
+        android:layout_width="150dip"
+        android:layout_height="40dip"
+        android:layout_alignRight="@+id/epassword"
+        android:layout_below="@+id/epassword"
+        android:layout_marginTop="10dip"
+        android:background="@drawable/buttonshape"
+        android:text="@string/login"
+        android:textColor="#D1D1D1"
+        android:textSize="25dip" />
+
+    <ImageView
+        android:id="@+id/imageView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:contentDescription="@string/logotext"
+        android:src="@drawable/wsu_logontext_old" />
+
+</RelativeLayout>

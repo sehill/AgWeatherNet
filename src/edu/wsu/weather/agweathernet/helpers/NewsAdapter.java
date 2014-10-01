@@ -7,7 +7,7 @@ import java.util.Date;
 import java.util.List;
 
 import android.annotation.SuppressLint;
-import android.app.FragmentManager;
+import android.support.v4.app.FragmentManager;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;

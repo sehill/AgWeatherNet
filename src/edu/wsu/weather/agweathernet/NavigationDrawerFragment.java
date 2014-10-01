@@ -2,16 +2,18 @@ package edu.wsu.weather.agweathernet;
 
 import java.util.Map;
 
-import android.app.ActionBar;
 import android.app.Activity;
-import android.app.Fragment;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
+import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.ActionBarDrawerToggle;
+import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -134,7 +136,7 @@ public class NavigationDrawerFragment extends Fragment {
 						getString(R.string.navStations),
 						getString(R.string.navStationsMap),
 						getString(R.string.navAWNews),
-						getString(R.string.navOutlooks)}));
+						getString(R.string.navOutlooks) }));
 
 		mDrawerListView.setItemChecked(mCurrentSelectedPosition, true);
 
@@ -182,8 +184,8 @@ public class NavigationDrawerFragment extends Fragment {
 					return;
 				}
 
-				getActivity().invalidateOptionsMenu(); // calls
-														// onPrepareOptionsMenu()
+				getActivity().supportInvalidateOptionsMenu(); // calls
+				// onPrepareOptionsMenu()
 			}
 
 			@Override
@@ -204,8 +206,8 @@ public class NavigationDrawerFragment extends Fragment {
 							.apply();
 				}
 
-				getActivity().invalidateOptionsMenu(); // calls
-														// onPrepareOptionsMenu()
+				getActivity().supportInvalidateOptionsMenu(); // calls
+				// onPrepareOptionsMenu()
 			}
 		};
 
@@ -315,7 +317,10 @@ public class NavigationDrawerFragment extends Fragment {
 	}
 
 	private ActionBar getActionBar() {
-		return getActivity().getActionBar();
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+			return ((ActionBarActivity) getActivity()).getSupportActionBar();
+		}
+		return null;
 	}
 
 	/**

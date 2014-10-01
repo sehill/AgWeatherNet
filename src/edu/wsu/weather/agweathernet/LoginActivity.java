@@ -18,7 +18,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager.NameNotFoundException;
-import android.graphics.Typeface;
+//import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -362,18 +362,19 @@ public class LoginActivity extends Activity {
 
 		loginTip = (TextView) findViewById(R.id.loginTip);
 		username = (EditText) findViewById(R.id.username);
-		password = (EditText) findViewById(R.id.password);
+		password = (EditText) findViewById(R.id.epassword);
 		loginButton = (Button) findViewById(R.id.loginButton);
 
 		prefs = this.getSharedPreferences("edu.wsu.weather.agweathernet",
 				Context.MODE_PRIVATE);
 
-		Typeface tf = Typeface.createFromAsset(getAssets(), "fonts/Custom.ttf");
-
-		loginTip.setTypeface(tf);
-		username.setTypeface(tf);
-		password.setTypeface(tf);
-		loginButton.setTypeface(tf);
+		// Typeface tf = Typeface.createFromAsset(getAssets(),
+		// "fonts/Custom.ttf");
+		//
+		// loginTip.setTypeface(tf);
+		// username.setTypeface(tf);
+		// password.setTypeface(tf);
+		// loginButton.setTypeface(tf);
 	}
 
 	public class UserLoginTask extends AsyncTask<Void, Void, JSONObject> {

@@ -14,22 +14,24 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="15sp"
-        android:text="Log in to your weather.wsu.edu account and have limited access by your smartphone. You will receive some useful notifications from AgWeatherNet team!" />
+        android:layout_marginTop="15dip"
+        android:text="Log in to your weather.wsu.edu account a
+        nd have limited access by your smartphone. You will
+         receive some useful notifications from AgWeatherNet team!" />
 
     <EditText
         android:id="@+id/username"
         android:layout_width="fill_parent"
-        android:layout_height="39sp"
-        android:layout_above="@+id/password"
+        android:layout_height="39dip"
+        android:layout_above="@+id/epassword"
         android:layout_centerHorizontal="true"
         android:hint="@string/enter_email"
         android:text="" />
 
     <EditText
-        android:id="@+id/password"
+        android:id="@+id/epassword"
         android:layout_width="fill_parent"
-        android:layout_height="39sp"
+        android:layout_height="39dip"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
         android:hint="@string/enter_password"
@@ -38,15 +40,15 @@
 
     <Button
         android:id="@+id/loginButton"
-        android:layout_width="150sp"
-        android:layout_height="40sp"
-        android:layout_alignRight="@+id/password"
-        android:layout_below="@+id/password"
-        android:layout_marginTop="10sp"
+        android:layout_width="150dip"
+        android:layout_height="40dip"
+        android:layout_alignRight="@+id/epassword"
+        android:layout_below="@+id/epassword"
+        android:layout_marginTop="10dip"
         android:background="@drawable/buttonshape"
         android:text="@string/login"
         android:textColor="#D1D1D1"
-        android:textSize="25sp" />
+        android:textSize="25dip" />
 
     <ImageView
         android:id="@+id/imageView1"
