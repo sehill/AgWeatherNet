@@ -130,13 +130,16 @@ public class NavigationDrawerFragment extends Fragment {
 
 		mDrawerListView.setAdapter(new ArrayAdapter<String>(getActionBar()
 				.getThemedContext(),
-				android.R.layout.simple_list_item_activated_1,
+				// android.R.layout.simple_list_item_activated_1,
+				edu.wsu.weather.agweathernet.R.layout.list_item_activated,
 				android.R.id.text1, new String[] { getString(R.string.navHome),
 						getString(R.string.navMyAlerts),
 						getString(R.string.navStations),
 						getString(R.string.navStationsMap),
 						getString(R.string.navAWNews),
-						getString(R.string.navOutlooks) }));
+						getString(R.string.navOutlooks),
+						getString(R.string.currentCondition),
+						getString(R.string.donationInfo) }));
 
 		mDrawerListView.setItemChecked(mCurrentSelectedPosition, true);
 
@@ -317,10 +320,10 @@ public class NavigationDrawerFragment extends Fragment {
 	}
 
 	private ActionBar getActionBar() {
-		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
-			return ((ActionBarActivity) getActivity()).getSupportActionBar();
-		}
-		return null;
+		// if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+		return ((ActionBarActivity) getActivity()).getSupportActionBar();
+		// }
+		// return null;
 	}
 
 	/**
@@ -334,4 +337,5 @@ public class NavigationDrawerFragment extends Fragment {
 		void onNavigationDrawerItemSelected(int position,
 				Map<String, String> extras);
 	}
+
 }

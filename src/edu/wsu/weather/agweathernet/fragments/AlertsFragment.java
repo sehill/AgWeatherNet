@@ -8,14 +8,14 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import android.app.Activity;
-import android.support.v4.app.FragmentTransaction;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.SharedPreferences;
 import android.content.DialogInterface.OnCancelListener;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -31,12 +31,11 @@ import edu.wsu.weather.agweathernet.CommonUtility;
 import edu.wsu.weather.agweathernet.MainActivity;
 import edu.wsu.weather.agweathernet.R;
 import edu.wsu.weather.agweathernet.helpers.AgWeatherNetApp;
+import edu.wsu.weather.agweathernet.helpers.AlertsLoader;
 import edu.wsu.weather.agweathernet.helpers.HttpRequestWrapper;
 
 public class AlertsFragment extends BaseFragment {
 	ListView alertsListView;
-	AlertsAdapter adapter;
-	ArrayList<AlertsModel> alertModelList;
 	RelativeLayout alertRowData;
 	RelativeLayout longClickData;
 
@@ -62,8 +61,6 @@ public class AlertsFragment extends BaseFragment {
 				.findViewById(R.id.longClickRemoveView);
 
 		alertsListView = (ListView) rootView.findViewById(R.id.alerts_list);
-
-		loadServerData();
 
 		((MainActivity) activity).onSectionAttached("My Alerts");
 
@@ -150,12 +147,13 @@ public class AlertsFragment extends BaseFragment {
 
 	private void loadServerData() {
 		Log.i(CommonUtility.ALERTS_ACT_STR, "loadServerData()");
-		new AlertsLoader().execute();
+		new AlertsLoader(activity, alertsListView, this).execute();
 	}
 
-	private class AlertsLoader extends
+	private class AlertsLoaderOLD extends
 			AsyncTask<Void, Integer, ArrayList<AlertsModel>> {
 		protected ProgressDialog progressDialog;
+		ArrayList<AlertsModel> alertModelList;
 
 		protected void onPreExecute() {
 			super.onPreExecute();
@@ -244,6 +242,7 @@ public class AlertsFragment extends BaseFragment {
 		protected void onPostExecute(ArrayList<AlertsModel> result) {
 			Log.i("AlertsActivity",
 					"alerts retrieved, size() = " + result.size());
+			AlertsAdapter adapter;
 			adapter = new AlertsAdapter(context, alertModelList,
 					getFragmentManager());
 			alertsListView.setAdapter(adapter);

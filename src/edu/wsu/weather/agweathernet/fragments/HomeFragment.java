@@ -57,6 +57,7 @@ public class HomeFragment extends BaseFragment implements LocationListener {
 	ListView stationsListView;
 	StationsAdapter adapter;
 	ArrayList<StationModel> stationsModelList;
+	boolean favoritesLoaded = true;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -298,21 +299,27 @@ public class HomeFragment extends BaseFragment implements LocationListener {
 
 	private void loadServerData() {
 		Log.i(CommonUtility.STATIONS_TAG, "loadServerData()");
-		new StationsLoader().execute();
+		String url = CommonUtility.HOST_URL
+				+ "test/stations.php?n=30&favsts=1&uname="
+				+ getPreferenceValue("username", "") + "&auth_token="
+				+ getPreferenceValue("auth_token", "");
+		new StationsLoader().execute(url);
 	}
 
 	private class StationsLoader extends
-			AsyncTask<Void, Integer, ArrayList<StationModel>> {
+			AsyncTask<String, Integer, ArrayList<StationModel>> {
 		protected ProgressDialog progressDialog;
 
 		protected void onPreExecute() {
 			super.onPreExecute();
 			progressDialog = new ProgressDialog(activity);
-			progressDialog.setTitle("Stations");
+			if (favoritesLoaded) {
+				progressDialog.setTitle("Favorite Stations");
+			} else {
+				progressDialog.setTitle("Nearest Stations");
+			}
 			progressDialog.setMessage(CommonUtility.LOADING_PEASE_WAIT);
-			
 			progressDialog.setCancelable(true);
-			
 			progressDialog.setOnCancelListener(new OnCancelListener() {
 				@Override
 				public void onCancel(DialogInterface dialog) {
@@ -324,25 +331,19 @@ public class HomeFragment extends BaseFragment implements LocationListener {
 		};
 
 		@Override
-		protected ArrayList<StationModel> doInBackground(Void... arg0) {
+		protected ArrayList<StationModel> doInBackground(String... url) {
 			stationsModelList = new ArrayList<StationModel>();
-
 			String resultString = "Doing in background";
 			try {
 
 				Log.i(CommonUtility.STATIONS_TAG, "getting stations background");
 
-				String url = CommonUtility.HOST_URL
-						+ "test/stations.php?n=30&favsts=1&uname="
-						+ getPreferenceValue("username", "") + "&auth_token="
-						+ getPreferenceValue("auth_token", "");
-
-				Log.i(CommonUtility.HOME_FRAG_TAG, url);
+				Log.i(CommonUtility.HOME_FRAG_TAG, url[0]);
 
 				resultString = HttpRequestWrapper.getString(
 						((AgWeatherNetApp) activity.getApplication())
 								.getHttpClient(), ((AgWeatherNetApp) activity
-								.getApplication()).getHttpContext(), url);
+								.getApplication()).getHttpContext(), url[0]);
 
 			} catch (Exception e) {
 				Log.e(CommonUtility.HOME_FRAG_TAG, e.getMessage());
@@ -375,14 +376,31 @@ public class HomeFragment extends BaseFragment implements LocationListener {
 			} catch (Exception ex) {
 				Log.e(CommonUtility.HOME_FRAG_TAG, ex.getMessage());
 			}
+			if (stationsModelList.size() == 0) {
+
+			}
 			return stationsModelList;
 		}
 
 		@Override
 		protected void onPostExecute(ArrayList<StationModel> result) {
+			progressDialog.dismiss();
+			if ((result == null || result.size() == 0) && favoritesLoaded) {
+				favoritesLoaded = false;
+				String url = CommonUtility.HOST_URL
+						+ "test/stations.php?uname="
+						+ getPreferenceValue("username", "") + "&auth_token="
+						+ getPreferenceValue("auth_token", "") + "&lat="
+						+ location.getLatitude() + "&long="
+						+ location.getLongitude() + "&nearests=7";
+				Log.i(CommonUtility.HOME_FRAG_TAG, url);
+				new StationsLoader().execute(url);
+				Log.i(CommonUtility.HOME_FRAG_TAG, "favoritesLoaded"
+						+ favoritesLoaded);
+			}
 			adapter = new StationsAdapter(activity, context, stationsModelList);
 			stationsListView.setAdapter(adapter);
-			progressDialog.dismiss();
+
 		}
 	}
 }

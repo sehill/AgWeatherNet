@@ -7,7 +7,9 @@
     <item name="defaultcolor" type="color">#0A0A0A</item>
     <item name="default_background" type="color">#EDEDED</item>
     <item name="def_white" type="color">#FFF</item>
-    <color name="def_subtitle">#7C7C7C</color>
+
+    <color name="def_subtitle">#7C7C7C</color>
     <color name="def_desc">#505050</color>
+    <color name="link">#07c</color>
 
 </resources>

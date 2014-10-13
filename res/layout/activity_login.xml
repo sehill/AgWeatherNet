@@ -15,9 +15,7 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="15dip"
-        android:text="Log in to your weather.wsu.edu account a
-        nd have limited access by your smartphone. You will
-         receive some useful notifications from AgWeatherNet team!" />
+        android:text="@string/app_hint" />
 
     <EditText
         android:id="@+id/username"
@@ -25,7 +23,7 @@
         android:layout_height="39dip"
         android:layout_above="@+id/epassword"
         android:layout_centerHorizontal="true"
-        android:hint="@string/enter_email"
+        android:hint="@string/enter_username"
         android:text="" />
 
     <EditText
@@ -57,6 +55,18 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:contentDescription="@string/logotext"
-        android:src="@drawable/wsu_logontext_old" />
+        android:src="@drawable/wsutextlogo" />
+
+    <TextView
+        android:id="@+id/signUpLink"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/epassword"
+        android:layout_alignTop="@+id/loginButton"
+        android:layout_below="@+id/epassword"
+        android:text="@string/sign_up"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textColor="@color/link"
+        android:textSize="15sp" />
 
 </RelativeLayout>

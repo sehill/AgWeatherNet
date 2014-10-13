@@ -120,13 +120,22 @@ public class StationsFragment extends BaseFragment {
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
 		super.onCreateOptionsMenu(menu, inflater);
 		inflater.inflate(R.menu.stations, menu);
-
+		activity = getActivity();
 		// if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+		Log.i(CommonUtility.STATIONS_TAG, "activity is " + getActivity());
+		Log.i(CommonUtility.STATIONS_TAG, "activity is "
+				+ Context.SEARCH_SERVICE);
+
 		SearchManager searchManager = (SearchManager) activity
 				.getSystemService(Context.SEARCH_SERVICE);
 		MenuItem searchItem = menu.findItem(R.id.search);
+		Log.i(CommonUtility.STATIONS_TAG, "searchItem is =" + searchItem);
+		Log.i(CommonUtility.STATIONS_TAG,
+				"getActionView is =" + MenuItemCompat.getActionView(searchItem));
 		SearchView searchView = (SearchView) MenuItemCompat
 				.getActionView(searchItem);
+		Log.i(CommonUtility.STATIONS_TAG, "searchView is =" + searchView);
+		Log.i(CommonUtility.STATIONS_TAG, "searchManager is =" + searchManager);
 		searchView.setSearchableInfo(searchManager.getSearchableInfo(activity
 				.getComponentName()));
 		this.searchView = searchView;

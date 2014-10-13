@@ -31,6 +31,9 @@ public class CommonUtility {
 	public static final String LOADING_PEASE_WAIT = "Loading... Please Wait";
 	public static final int MULTIPLY_LAT_LNG_BY = -1;
 	public static final String NEWS_TAG = "AWNewsFragment";
+	public static final String CURR_WEAHTER_ADAPTER = "CurrentWeatherAdapter";
+	public static final String CurrentWeatherFragment = "CurrentWeatherFragment";
+	public static final String DONATION_FRAG = "DonationFragment";
 
 	/**
 	 * Checks if the device has Internet connection.

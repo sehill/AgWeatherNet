@@ -3,18 +3,24 @@ package edu.wsu.weather.agweathernet;
 import java.util.HashMap;
 import java.util.Map;
 
-import android.support.v7.app.ActionBar;
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 import edu.wsu.weather.agweathernet.fragments.AWNewsFragment;
 import edu.wsu.weather.agweathernet.fragments.AlertsFragment;
+import edu.wsu.weather.agweathernet.fragments.CurrentWeatherFragment;
+import edu.wsu.weather.agweathernet.fragments.DonationFragment;
 import edu.wsu.weather.agweathernet.fragments.HomeFragment;
 import edu.wsu.weather.agweathernet.fragments.MapFragment;
 import edu.wsu.weather.agweathernet.fragments.StationsFragment;
@@ -50,8 +56,7 @@ public class MainActivity extends ActionBarActivity implements
 				selectedPosition = 2; // TODO replace
 				extras = new HashMap<String, String>();
 				extras.put("searchQuery", bundle.getString("searchQuery"));
-				Log.i(CommonUtility.MAIN_ACTIVITY,
-						"stations extras and position set");
+				Log.i(CommonUtility.MAIN_ACTIVITY, "stations extras and position set");
 				break;
 			case "some other":
 				// TODO do something
@@ -73,6 +78,15 @@ public class MainActivity extends ActionBarActivity implements
 		// Set up the drawer.
 		mNavigationDrawerFragment.setUp(R.id.navigation_drawer,
 				(DrawerLayout) findViewById(R.id.drawer_layout));
+	}
+
+	@Override
+	public void onBackPressed() {
+		int fragments = getSupportFragmentManager().getBackStackEntryCount();
+		if (fragments == 1) {
+			finish();
+		}
+		super.onBackPressed();
 	}
 
 	@Override
@@ -113,6 +127,12 @@ public class MainActivity extends ActionBarActivity implements
 				extras = new HashMap<String, String>();
 			}
 			extras.put("entry_type", "Outlooks");
+			break;
+		case 6:
+			newFrag = new CurrentWeatherFragment();
+			break;
+		case 7:
+			newFrag = new DonationFragment();
 			break;
 		default:
 			newFrag = new HomeFragment();
@@ -170,7 +190,17 @@ public class MainActivity extends ActionBarActivity implements
 		// automatically handle clicks on the Home/Up button, so long
 		// as you specify a parent activity in AndroidManifest.xml.
 		int id = item.getItemId();
-		if (id == R.id.action_settings) {
+		if (id == R.id.action_logout) {
+			SharedPreferences prefs = this.getSharedPreferences(
+					"edu.wsu.weather.agweathernet", Context.MODE_PRIVATE);
+			prefs.edit().clear().commit();
+			Toast.makeText(getApplicationContext(), "You have been logged out",
+					Toast.LENGTH_LONG).show();
+			Intent intent = new Intent(getApplicationContext(),
+					LoginActivity.class);
+			intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP
+					| Intent.FLAG_ACTIVITY_NEW_TASK);
+			startActivity(intent);
 			return true;
 		}
 		return super.onOptionsItemSelected(item);

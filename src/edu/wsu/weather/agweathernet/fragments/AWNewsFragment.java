@@ -37,7 +37,7 @@ public class AWNewsFragment extends BaseFragment {
 	ListView newsListView;
 	NewsAdapter adapter;
 	Context context;
-	String entryType = "";
+	public String entryType = "";
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -87,6 +87,7 @@ public class AWNewsFragment extends BaseFragment {
 	}
 
 	private void setEventListeners() {
+
 	}
 
 	private void loadServerData() {
@@ -107,7 +108,6 @@ public class AWNewsFragment extends BaseFragment {
 		protected void onPreExecute() {
 			super.onPreExecute();
 			progressDialog = new ProgressDialog(activity);
-			progressDialog.setTitle("Stations");
 			progressDialog.setMessage(CommonUtility.LOADING_PEASE_WAIT);
 			progressDialog.setCancelable(true);
 			progressDialog.setOnCancelListener(new OnCancelListener() {
@@ -165,7 +165,8 @@ public class AWNewsFragment extends BaseFragment {
 		}
 
 		protected void onPostExecute(final List<NewsEntry> newsList) {
-			adapter = new NewsAdapter(context, newsList, getFragmentManager());
+			adapter = new NewsAdapter(context, newsList, getFragmentManager(),
+					entryType);
 			newsListView.setAdapter(adapter);
 			progressDialog.dismiss();
 		}

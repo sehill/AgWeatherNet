@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="edu.wsu.weather.agweathernet"
-    android:versionCode="1"
-    android:versionName="1.0" >
+    android:versionCode="2"
+    android:versionName="2.0" >
 
     <uses-sdk
         android:minSdkVersion="10"
@@ -28,7 +28,7 @@
         android:required="true" />
 
     <application
-        android:name="edu.wsu.weather.agweathernet.helpers.AgWeatherNetApp"
+        android:name=".helpers.AgWeatherNetApp"
         android:allowBackup="true"
         android:icon="@drawable/awnlogo"
         android:label="@string/app_name"
@@ -89,6 +89,10 @@
         <activity
             android:name=".StationMapActivity"
             android:label="@string/title_activity_station_map" >
+        </activity>
+        <activity
+            android:name=".RegistrationActivity"
+            android:label="@string/title_activity_registration" >
         </activity>
     </application>
 

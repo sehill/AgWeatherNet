@@ -43,6 +43,7 @@ public class LoginActivity extends Activity {
 	EditText username;
 	EditText password;
 	Button loginButton;
+	TextView signUpLink;
 
 	SharedPreferences prefs;
 	public static final String EXTRA_MESSAGE = "message";
@@ -174,6 +175,8 @@ public class LoginActivity extends Activity {
 		int currentVersion = getAppVersion(context);
 		if (registeredVersion != currentVersion) {
 			Log.i(CommonUtility.LOGIN_ACT_STR, "App version changed.");
+			// TODO update database with new registration_id
+			// But do not insert new registration_id!
 			return "";
 		}
 		return registrationId;
@@ -211,7 +214,6 @@ public class LoginActivity extends Activity {
 
 			@Override
 			protected void onPostExecute(String msg) {
-				// showToast(msg);
 				Log.i(CommonUtility.LOGIN_ACT_STR,
 						"registerInBackground() onPostExecute msg = " + msg);
 			}
@@ -300,11 +302,6 @@ public class LoginActivity extends Activity {
 		}.execute();
 	}
 
-	@Override
-	protected void onResume() {
-		super.onResume();
-	}
-
 	protected void redirectIfLoggedIn() {
 		String defVal = "empty";
 		String userId = prefs.getString("userId", defVal);
@@ -332,7 +329,7 @@ public class LoginActivity extends Activity {
 		loginButton.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				if (checkAlertConnection()) {
+				if (checkAlertConnection() && checkPlayServices()) {
 					Log.i(CommonUtility.LOGIN_ACT_STR,
 							"Calling user login task");
 					UserLoginTask ult = new UserLoginTask(
@@ -340,6 +337,14 @@ public class LoginActivity extends Activity {
 							LoginActivity.this.password.getText().toString());
 					ult.execute();
 				}
+			}
+		});
+
+		signUpLink.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View argView) {
+				openActivity(RegistrationActivity.class);
 			}
 		});
 	}
@@ -364,6 +369,7 @@ public class LoginActivity extends Activity {
 		username = (EditText) findViewById(R.id.username);
 		password = (EditText) findViewById(R.id.epassword);
 		loginButton = (Button) findViewById(R.id.loginButton);
+		signUpLink = (TextView) findViewById(R.id.signUpLink);
 
 		prefs = this.getSharedPreferences("edu.wsu.weather.agweathernet",
 				Context.MODE_PRIVATE);
@@ -445,6 +451,8 @@ public class LoginActivity extends Activity {
 					sendRegistrationIdToBackend();
 
 					openActivity(MainActivity.class);
+
+					finish();
 
 				} else if (res.equals("wu")) { // Wrong user account
 					LoginActivity.this.password

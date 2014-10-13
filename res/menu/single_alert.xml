@@ -14,5 +14,10 @@
         android:icon="@drawable/plus"
         android:orderInCategory="102"
         android:title="@string/new_alert"/>
+    <item
+        android:id="@+id/removeAlert"
+        android:orderInCategory="104"
+        android:showAsAction="withText|ifRoom"
+        android:title="@string/remove_alert"/>
 
 </menu>

@@ -1,10 +1,12 @@
 package edu.wsu.weather.agweathernet.fragments;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
+import org.apache.http.ParseException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpGet;
@@ -126,6 +128,48 @@ public class SingleAlertFragment extends BaseFragment {
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 		case R.id.action_settings:
+			return true;
+		case R.id.removeAlert:
+			new AsyncTask<Void, Void, String>() {
+				@Override
+				protected String doInBackground(Void... params) {
+					try {
+						String url = "test/getalert.php?uname="
+								+ prefs.getString("username", "")
+								+ "&auth_token="
+								+ prefs.getString("auth_token", "")
+								+ "&remove_alert_id=" + alertId;
+						String respString = HttpRequestWrapper.getString(
+								((AgWeatherNetApp) activity.getApplication())
+										.getHttpClient(),
+								((AgWeatherNetApp) activity.getApplication())
+										.getHttpContext(),
+								CommonUtility.HOST_URL + url);
+						Log.e(CommonUtility.SINGLE_ALERT_ACT_STR,
+								"respString = " + respString);
+						return respString;
+					} catch (ParseException e) {
+						Log.e(CommonUtility.SINGLE_ALERT_ACT_STR,
+								e.getMessage());
+					} catch (IOException e) {
+						Log.e(CommonUtility.SINGLE_ALERT_ACT_STR,
+								e.getMessage());
+					}
+					return "";
+				}
+
+				protected void onPostExecute(String result) {
+					Toast.makeText(context, "Alert was removed",
+							Toast.LENGTH_LONG).show();
+					AlertsFragment newFrag = new AlertsFragment();
+					FragmentTransaction ft = getFragmentManager()
+							.beginTransaction();
+					ft.replace(R.id.container, newFrag);
+					ft.addToBackStack(null);
+					ft.commit();
+				};
+			}.execute();
+
 			return true;
 		case R.id.editAlert:
 			setAlertEnabled(true);

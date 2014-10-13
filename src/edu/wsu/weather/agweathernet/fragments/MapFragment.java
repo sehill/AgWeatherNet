@@ -7,8 +7,6 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import android.app.Activity;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -16,6 +14,7 @@ import android.content.DialogInterface.OnCancelListener;
 import android.content.pm.ActivityInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.InflateException;
 import android.view.LayoutInflater;
@@ -30,6 +29,7 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.GoogleMap.OnInfoWindowClickListener;
 import com.google.android.gms.maps.GoogleMap.OnMarkerClickListener;
+import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
@@ -50,13 +50,22 @@ public class MapFragment extends BaseFragment implements OnMarkerClickListener,
 	GoogleMap map;
 	String stationLocLat;
 	String stationLocLng;
+	SupportMapFragment mapFrag;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		Log.i(CommonUtility.MAP_FRAG_TAG, "onCreate");
 		activity = getActivity();
 		context = activity.getApplicationContext();
 		setHasOptionsMenu(true);
+
+		mapFrag = SupportMapFragment.newInstance();
+		FragmentTransaction fragmentTransaction = getChildFragmentManager()
+				.beginTransaction();
+		fragmentTransaction.add(R.id.mapFragmentContainer, mapFrag);
+		fragmentTransaction.commit();
+
 		((MainActivity) activity).onSectionAttached("Stations");
 	}
 
@@ -66,19 +75,19 @@ public class MapFragment extends BaseFragment implements OnMarkerClickListener,
 
 		Log.i(CommonUtility.MAP_FRAG_TAG, "onCreateView");
 
-		if (rootView != null) {
-
-			Log.i(CommonUtility.MAP_FRAG_TAG, "rootView != null");
-
-			ViewGroup parent = (ViewGroup) rootView.getParent();
-
-			if (parent != null) {
-
-				Log.i(CommonUtility.MAP_FRAG_TAG, "parent != null");
-
-				parent.removeView(rootView);
-			}
-		}
+		// if (rootView != null) {
+		//
+		// Log.i(CommonUtility.MAP_FRAG_TAG, "rootView != null");
+		//
+		// ViewGroup parent = (ViewGroup) rootView.getParent();
+		//
+		// if (parent != null) {
+		//
+		// Log.i(CommonUtility.MAP_FRAG_TAG, "parent != null");
+		//
+		// parent.removeView(rootView);
+		// }
+		// }
 		try {
 			Log.i(CommonUtility.MAP_FRAG_TAG, "Inflated");
 
@@ -90,8 +99,27 @@ public class MapFragment extends BaseFragment implements OnMarkerClickListener,
 			Log.i(CommonUtility.MAP_FRAG_TAG, e.getMessage());
 		}
 
-		map = ((com.google.android.gms.maps.SupportMapFragment) getFragmentManager()
-				.findFragmentById(R.id.location_map)).getMap();
+		return rootView;
+	}
+
+	@Override
+	public void onDestroyView() {
+		Log.i(CommonUtility.MAP_FRAG_TAG, "onDestroyView");
+		super.onDestroyView();
+		// Fragment fragment = (getFragmentManager()
+		// .findFragmentById(R.id.location_map));
+		// FragmentTransaction ft = getActivity().getSupportFragmentManager()
+		// .beginTransaction();
+		// ft.remove(fragment);
+		// ft.commit();
+	}
+
+	@Override
+	public void onResume() {
+		Log.i(CommonUtility.MAP_FRAG_TAG, "onResume");
+		super.onResume();
+
+		map = mapFrag.getMap();
 		map.setMyLocationEnabled(true);
 		map.setOnInfoWindowClickListener(this);
 
@@ -103,26 +131,9 @@ public class MapFragment extends BaseFragment implements OnMarkerClickListener,
 			stationLocLng = bundleArgs.getString("lng");
 		}
 
-		return rootView;
-	}
-
-	@Override
-	public void onDestroyView() {
-		super.onDestroyView();
-		Fragment fragment = (getFragmentManager()
-				.findFragmentById(R.id.location_map));
-		FragmentTransaction ft = getActivity().getSupportFragmentManager()
-				.beginTransaction();
-		ft.remove(fragment);
-		ft.commit();
-	}
-
-	@Override
-	public void onResume() {
 		Log.i(CommonUtility.MAP_FRAG_TAG, "call loadMarkers(...)");
 		loadMarkers();
 		Log.i(CommonUtility.MAP_FRAG_TAG, "end call loadMarkers(...)");
-		super.onResume();
 	}
 
 	/*
